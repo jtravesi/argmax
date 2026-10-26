@@ -223,8 +223,56 @@ export const en = {
 		best: 'Best case',
 		stdDev: 'σ',
 		stdDevLong: 'Standard deviation',
+		euShort: 'EU',
 		pBelowTau: (tau: string) => `P(u < ${tau})`,
 		rangeChart: 'Range of utilities per alternative: worst case, expected utility and best case',
+		chartTable: 'The same values are in the table.',
+		profile: 'Expected profile',
+		profileHelp:
+			'The average score you expect on each dimension, x̄(a, d). It does not depend on the weights.',
+		dimension: 'Dimension',
+		dominance: (a: string, b: string) => `${a} beats ${b} whatever the weights.`,
+		dominanceHelp:
+			'It scores at least as well on every dimension of the expected profile, and better on at least one.',
+		whatIf: 'What if…',
+		whatIfHelp:
+			'Move a weight or a probability to see how the ranking would change. The others are rescaled proportionally. Your model is not changed.',
+		whatIfWeights: 'Weights',
+		whatIfProbabilities: (alt: string) => `Probabilities of ${alt}`,
+		whatIfRanking: 'What-if ranking',
+		whatIfChanged: (name: string) => `With these values, ${name} comes first.`,
+		whatIfSame: 'The first alternative does not change.',
+		reset: 'Reset',
+		weightOf: (dim: string) => `Weight of ${dim}`,
+		probabilityOf: (state: string, alt: string) => `Probability of ${state} (${alt})`,
+		tipping: 'Tipping points',
+		tippingWeightsHelp: (runnerUp: string, winner: string) =>
+			`The weight of each dimension at which ${runnerUp} would tie with ${winner}, the others rescaled proportionally. Beyond it, the order changes.`,
+		tippingProbabilitiesHelp: (runnerUp: string, winner: string) =>
+			`The probability of each outcome of the top two at which ${runnerUp} and ${winner} would tie.`,
+		current: 'Current',
+		tippingPoint: 'Tipping point',
+		noWeightChanges: 'No weight changes the order',
+		noProbabilityChanges: 'No probability changes the order',
+		side: {
+			above: (value: string) => `above ${value}`,
+			below: (value: string) => `below ${value}`,
+			at: (value: string) => `at ${value}`
+		},
+		outcomeOf: (state: string, alt: string) => `${state} (${alt})`,
+		tornado: 'Tornado',
+		tornadoHelp: (winner: string, runnerUp: string, h: string) =>
+			`How the gap between ${winner} and ${runnerUp} changes when each weight or probability moves ±${h} (the others rescaled). A bar that crosses 0 means that input alone can change the winner.`,
+		tornadoH: 'Range explored',
+		tornadoChart: (winner: string, runnerUp: string) =>
+			`Tornado diagram of the gap between ${winner} and ${runnerUp} for each input`,
+		parameter: 'Input',
+		range: 'Range explored',
+		gapAtLow: 'Gap at the low end',
+		gapAtHigh: 'Gap at the high end',
+		winnerChanges: 'Winner changes?',
+		yes: (name: string) => `Yes: ${name}`,
+		no: 'No',
 		reminder:
 			'The model does not decide for you. If the result does not match your intuition, ask yourself what you are modeling wrong, or what is biasing your intuition.'
 	},

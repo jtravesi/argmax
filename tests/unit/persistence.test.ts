@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { formatPercent, formatUtility, toPercentInput } from '../../src/lib/format';
+import {
+	formatGap,
+	formatPercent,
+	formatTipping,
+	formatUtility,
+	toPercentInput
+} from '../../src/lib/format';
 import {
 	clearSaved,
 	loadSaved,
@@ -89,6 +95,10 @@ describe('number formats (SPEC.md §3.2)', () => {
 		expect(formatPercent(0.125)).toBe('13%');
 		expect(toPercentInput(0.07)).toBe(7);
 		expect(toPercentInput(Number.NaN)).toBeNaN();
+		expect(formatTipping(0.7222222)).toBe('72.2%');
+		expect(formatGap(0.51)).toBe('+0.51');
+		expect(formatGap(-0.2)).toBe('-0.20');
+		expect(formatGap(0)).toBe('0.00');
 	});
 });
 
