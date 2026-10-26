@@ -96,11 +96,6 @@
 		margin-top: 0;
 	}
 
-	.prose :global(h2),
-	.prose :global(h3) {
-		scroll-margin-top: 4rem;
-	}
-
 	.prose :global(blockquote) {
 		margin: 1rem 0;
 		padding: 0.5rem 1rem;

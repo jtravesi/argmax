@@ -45,6 +45,8 @@
 					<span class="n" aria-hidden="true">{i + 1}</span>
 					<span class="label">{t.wizard.steps[step]}</span>
 					{#if step !== 'results' && editor.stepHasErrors(step)}
+						<!-- WCAG 1.4.1: a visible mark besides the colour. -->
+						<span class="mark" aria-hidden="true">!</span>
 						<span class="sr-only">({t.wizard.hasErrors})</span>
 					{/if}
 				</button>
@@ -154,6 +156,11 @@
 
 	.error .label {
 		color: var(--color-error);
+	}
+
+	.mark {
+		color: var(--color-error);
+		font-weight: 700;
 	}
 
 	progress {
