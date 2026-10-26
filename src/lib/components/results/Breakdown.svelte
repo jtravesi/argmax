@@ -14,7 +14,7 @@
 		<div class="alternative">
 			<h4>{alt.name}</h4>
 			<StackedBar
-				label={t.results.contributionsChart(alt.name)}
+				label="{t.results.contributionsChart(alt.name)}. {t.results.chartTable}"
 				segments={alt.states.map((s) => ({ key: s.id, value: s.contribution }))}
 			/>
 			<div class="table-wrap">

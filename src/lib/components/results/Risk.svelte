@@ -46,6 +46,7 @@
 				<tr>
 					<th scope="col">{t.results.alternative}</th>
 					<th scope="col" class="num">{t.results.worst}</th>
+					<th scope="col" class="num"><abbr title={t.results.eu}>{t.results.euShort}</abbr></th>
 					<th scope="col" class="num">{t.results.best}</th>
 					<th scope="col" class="num"
 						><abbr title={t.results.stdDevLong}>{t.results.stdDev}</abbr></th
@@ -58,6 +59,7 @@
 					<tr>
 						<th scope="row">{alt.name}</th>
 						<td class="num">{formatUtility(alt.risk.worst)}</td>
+						<td class="num">{formatUtility(alt.eu)}</td>
 						<td class="num">{formatUtility(alt.risk.best)}</td>
 						<td class="num">{formatUtility(alt.risk.stdDev)}</td>
 						<td class="num">{formatPercent(alt.risk.pBelowTau)}</td>
@@ -67,7 +69,7 @@
 		</table>
 	</div>
 
-	<div class="ranges" role="img" aria-label={t.results.rangeChart}>
+	<div class="ranges" role="img" aria-label="{t.results.rangeChart}. {t.results.chartTable}">
 		{#each analysis.alternatives as alt (alt.id)}
 			<div class="range">
 				<span class="name">{alt.name}</span>
