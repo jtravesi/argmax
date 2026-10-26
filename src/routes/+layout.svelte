@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import { t } from '#lib/i18n/index.js';
 	import { LICENSE_URL, REPOSITORY_URL } from '#lib/site.js';
@@ -45,45 +46,6 @@
 </footer>
 
 <style>
-	:global(:root) {
-		--color-bg: #fdfdfc;
-		--color-fg: #1c1f24;
-		--color-muted: #5b6370;
-		--color-border: #dcdfe4;
-		--color-accent: #1f4fbf;
-		color-scheme: light dark;
-	}
-
-	@media (prefers-color-scheme: dark) {
-		:global(:root) {
-			--color-bg: #15171b;
-			--color-fg: #e6e8eb;
-			--color-muted: #a0a7b2;
-			--color-border: #2e333b;
-			--color-accent: #8fb0ff;
-		}
-	}
-
-	:global(body) {
-		margin: 0;
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		background: var(--color-bg);
-		color: var(--color-fg);
-		font-family:
-			system-ui,
-			-apple-system,
-			'Segoe UI',
-			Roboto,
-			sans-serif;
-		line-height: 1.5;
-	}
-
-	:global(a) {
-		color: var(--color-accent);
-	}
-
 	header {
 		position: sticky;
 		top: 0;
