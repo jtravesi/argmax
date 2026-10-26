@@ -73,6 +73,7 @@ Number format: 2 decimals for utilities; probabilities and weights as whole perc
 ## 4. Persistence, import and sharing
 
 - **Autosave** to `localStorage` (versioned key, e.g. `argmax:v1:current`) with debounce. Every access wrapped in try/catch: if it fails, the app keeps working and shows a discreet notice.
+  Only models that pass `parseModel` are saved. While the model being edited does not (for example, an empty title or fewer than two alternatives), nothing is written: the last valid version stays saved, and the wizard indicates that the current changes are not saved yet and why.
 - **New model** (with confirmation if there are unsaved changes) and **Load template**.
 - **Export JSON** (file download) and **Import JSON** (file picker). Schema in `ARCHITECTURE.md` §4. Import validates against the schema and shows readable errors, never loading partial data.
 - **Share by URL.** The model is serialized, compressed and encoded in the fragment: `/app#m=<payload>`. The fragment never reaches the server. "Copy link" button with a warning: "Anyone with this link will see your whole model."
