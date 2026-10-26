@@ -4,13 +4,13 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M0 · Scaffolding
 
-- [ ] SvelteKit + strict TypeScript + adapter-static project created at the repository root, without overwriting `docs/`, `fixtures/`, `python/` or `docker/`.
-- [ ] `kit.paths.base` read from `BASE_PATH` (empty by default).
-- [ ] ESLint, Prettier, `svelte-check`, Vitest and Playwright configured; scripts `dev`, `build`, `preview`, `check`, `lint`, `test`, `test:e2e`.
+- [x] SvelteKit + strict TypeScript + adapter-static project created at the repository root, without overwriting `docs/`, `fixtures/`, `python/` or `docker/`.
+- [x] `kit.paths.base` read from `BASE_PATH` (empty by default).
+- [x] ESLint, Prettier, `svelte-check`, Vitest and Playwright configured; scripts `dev`, `build`, `preview`, `check`, `lint`, `test`, `test:e2e`.
 - [x] `python/test_oracle.py` passes against `fixtures/career-decision.expected.json`.
-- [ ] Docker: `docker compose up --build` serves the site on `http://localhost:8080`; `nginx -t` passes; headers verified with `curl -I` on `/`, `/app` and a file under `/_app/immutable/`; container runs as non-root with a read-only filesystem.
+- [x] Docker: `docker compose up --build` serves the site on `http://localhost:8080`; `nginx -t` passes; headers verified with `curl -I` on `/`, `/app` and a file under `/_app/immutable/`; container runs as non-root with a read-only filesystem.
 - [ ] `ci.yml` green with a trivial test, the Python tests and the Docker build.
-- [ ] Base layout with navigation to the four routes (empty pages).
+- [x] Base layout with navigation to the four routes (empty pages).
 
 ## M1 · Mathematical core
 
