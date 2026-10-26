@@ -22,11 +22,11 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M2 · Wizard and basic results
 
-- [ ] Wizard steps 1–5 (`SPEC.md` §3.1) with live validation.
-- [ ] Results: verdict, ranking, breakdown per alternative and risk profile.
-- [ ] Autosave to `localStorage`.
-- [ ] All UI strings in `i18n/en.ts`.
-- [ ] Usable at 360 px and with the keyboard.
+- [x] Wizard steps 1–5 (`SPEC.md` §3.1) with live validation.
+- [x] Results: verdict, ranking, breakdown per alternative and risk profile.
+- [x] Autosave to `localStorage`.
+- [x] All UI strings in `i18n/en.ts`.
+- [x] Usable at 360 px and with the keyboard.
 
 ## M3 · Content pages
 
