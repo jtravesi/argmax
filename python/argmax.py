@@ -223,7 +223,7 @@ class Decision:
         if abs(den) < EPS:
             return None
         t = dr / den
-        return t if -EPS <= t <= 1 + EPS else None
+        return t if 0 <= t <= 1 else None
 
     def tipping_probability(self, alt_id: str, state_id: str, b: str) -> float | None:
         """Probability q of `state_id` in `alt_id` at which EU(alt_id) = EU(b).
@@ -238,7 +238,7 @@ class Decision:
         if abs(den) < EPS:
             return None
         q = (self.expected_utility(b) - m) / den
-        return q if -EPS <= q <= 1 + EPS else None
+        return q if 0 <= q <= 1 else None
 
     # ---- Report -------------------------------------------------------------
 
