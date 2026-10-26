@@ -1,0 +1,15 @@
+.git
+.github
+node_modules
+.svelte-kit
+build
+coverage
+test-results
+playwright-report
+python/__pycache__
+.pytest_cache
+*.md
+!docs/MODEL.md
+.env*
+Dockerfile
+compose.yaml

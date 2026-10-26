@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "title": "Career crossroads",
+  "description": "Example: stay at the current job while looking for a better one, take a leave of absence for a master's degree, or take a sabbatical year for personal projects. Horizon: 1 year.",
+  "horizon": "1 year",
+  "dimensions": [
+    { "id": "d1", "name": "Intellectual fulfillment", "weight": 0.25 },
+    { "id": "d2", "name": "Career progression", "weight": 0.15 },
+    { "id": "d3", "name": "Financial health", "weight": 0.15 },
+    { "id": "d4", "name": "Emotional wellbeing", "weight": 0.25 },
+    { "id": "d5", "name": "Freedom / autonomy", "weight": 0.20 }
+  ],
+  "alternatives": [
+    {
+      "id": "a1",
+      "name": "Stay and look for a new job",
+      "states": [
+        { "id": "s1", "name": "Great move to a better company", "probability": 0.35, "scores": { "d1": 7, "d2": 8, "d3": 8, "d4": 7, "d5": 5 } },
+        { "id": "s2", "name": "Lateral move, nothing special", "probability": 0.25, "scores": { "d1": 5, "d2": 5, "d3": 7, "d4": 5, "d5": 5 } },
+        { "id": "s3", "name": "Stagnation", "probability": 0.30, "scores": { "d1": 3, "d2": 3, "d3": 7, "d4": 4, "d5": 4 } },
+        { "id": "s4", "name": "Pleasant surprise", "probability": 0.10, "scores": { "d1": 8, "d2": 9, "d3": 8, "d4": 7, "d5": 6 } }
+      ]
+    },
+    {
+      "id": "a2",
+      "name": "Leave of absence for a master's degree",
+      "states": [
+        { "id": "s1", "name": "Perfect fit, I want to keep doing research", "probability": 0.15, "scores": { "d1": 10, "d2": 6, "d3": 2, "d4": 7, "d5": 4 } },
+        { "id": "s2", "name": "I enjoy it, but go back to industry", "probability": 0.30, "scores": { "d1": 8, "d2": 5, "d3": 2, "d4": 6, "d5": 4 } },
+        { "id": "s3", "name": "Academic disappointment", "probability": 0.20, "scores": { "d1": 3, "d2": 3, "d3": 2, "d4": 3, "d5": 3 } },
+        { "id": "s4", "name": "A hard year on a personal level", "probability": 0.35, "scores": { "d1": 4, "d2": 3, "d3": 2, "d4": 1, "d5": 2 } }
+      ]
+    },
+    {
+      "id": "a3",
+      "name": "Sabbatical year for personal projects",
+      "states": [
+        { "id": "s1", "name": "Clarity and a project that makes money", "probability": 0.20, "scores": { "d1": 9, "d2": 8, "d3": 4, "d4": 8, "d5": 9 } },
+        { "id": "s2", "name": "Clarity without income", "probability": 0.30, "scores": { "d1": 7, "d2": 5, "d3": 2, "d4": 7, "d5": 9 } },
+        { "id": "s3", "name": "Drifting without focus", "probability": 0.30, "scores": { "d1": 4, "d2": 2, "d3": 2, "d4": 4, "d5": 7 } },
+        { "id": "s4", "name": "A hard year without structure", "probability": 0.20, "scores": { "d1": 3, "d2": 2, "d3": 2, "d4": 1, "d5": 5 } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "description": "Expected results for fixtures/career-decision.json, generated with python/argmax.py. Shared oracle for the TypeScript and Python test suites.",
+  "tolerance": 1e-09,
+  "normalizedWeights": {
+    "d1": 0.25,
+    "d2": 0.15,
+    "d3": 0.15,
+    "d4": 0.25,
+    "d5": 0.2
+  },
+  "alternatives": {
+    "a1": {
+      "expectedUtility": 5.705,
+      "variance": 1.6847250000000005,
+      "stdDev": 1.2979695682102876,
+      "worstCase": 4.05,
+      "bestCase": 7.5,
+      "pBelowTau": 0.3,
+      "stateUtilities": {
+        "s1": 6.9,
+        "s2": 5.3,
+        "s3": 4.05,
+        "s4": 7.5
+      },
+      "expectedProfile": {
+        "d1": 5.3999999999999995,
+        "d2": 5.85,
+        "d3": 7.45,
+        "d4": 5.6,
+        "d5": 4.8
+      }
+    },
+    "a2": {
+      "expectedUtility": 3.9524999999999997,
+      "variance": 2.4643687499999998,
+      "stdDev": 1.5698308029848311,
+      "worstCase": 2.4,
+      "bestCase": 6.25,
+      "pBelowTau": 0.55,
+      "stateUtilities": {
+        "s1": 6.25,
+        "s2": 5.35,
+        "s3": 2.85,
+        "s4": 2.4
+      },
+      "expectedProfile": {
+        "d1": 5.9,
+        "d2": 4.05,
+        "d3": 2.0,
+        "d4": 3.8,
+        "d5": 3.1
+      }
+    },
+    "a3": {
+      "expectedUtility": 5.195,
+      "variance": 3.5852249999999994,
+      "stdDev": 1.8934690385638735,
+      "worstCase": 2.6,
+      "bestCase": 7.85,
+      "pBelowTau": 0.5,
+      "stateUtilities": {
+        "s1": 7.85,
+        "s2": 6.35,
+        "s3": 4.0,
+        "s4": 2.6
+      },
+      "expectedProfile": {
+        "d1": 5.7,
+        "d2": 4.1,
+        "d3": 2.4,
+        "d4": 5.1000000000000005,
+        "d5": 7.6
+      }
+    }
+  },
+  "ranking": [
+    "a1",
+    "a3",
+    "a2"
+  ],
+  "tippingWeights": [
+    {
+      "dimension": "d1",
+      "a": "a1",
+      "b": "a3",
+      "weight": 0.7222222222222215
+    },
+    {
+      "dimension": "d2",
+      "a": "a1",
+      "b": "a3",
+      "weight": null
+    },
+    {
+      "dimension": "d3",
+      "a": "a1",
+      "b": "a3",
+      "weight": 0.05451541850220277
+    },
+    {
+      "dimension": "d4",
+      "a": "a1",
+      "b": "a3",
+      "weight": null
+    },
+    {
+      "dimension": "d5",
+      "a": "a1",
+      "b": "a3",
+      "weight": 0.323262839879154
+    }
+  ],
+  "tippingProbabilities": [
+    {
+      "alternative": "a3",
+      "state": "s1",
+      "against": "a1",
+      "probability": 0.35367231638418084
+    },
+    {
+      "alternative": "a3",
+      "state": "s2",
+      "against": "a1",
+      "probability": 0.6090909090909092
+    },
+    {
+      "alternative": "a3",
+      "state": "s3",
+      "against": "a1",
+      "probability": 0.00125523012552306
+    },
+    {
+      "alternative": "a3",
+      "state": "s4",
+      "against": "a1",
+      "probability": 0.042774566473988154
+    }
+  ]
+}
