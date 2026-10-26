@@ -2,7 +2,8 @@
 	"extends": "$app/tsconfig",
 	"compilerOptions": {
 		"strict": true,
-		"types": ["$app/types", "node"]
+		"types": ["$app/types", "node"],
+		"allowImportingTsExtensions": true
 	},
-	"include": ["src", "tests", "vite.config.ts", "playwright.config.ts"]
+	"include": ["src", "tests", "scripts", "vite.config.ts", "playwright.config.ts"]
 }

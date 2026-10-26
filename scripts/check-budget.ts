@@ -11,7 +11,7 @@ if (files.length === 0) throw new Error('No scripts found in build/app.html; did
 let total = 0;
 for (const file of files) total += gzipSync(readFileSync(`build/${file}`)).length;
 
-const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
+const kb = (n: number) => `${(n / 1024).toFixed(1)} KB`;
 console.log(`/app initial JS: ${kb(total)} gzip in ${files.length} files (budget ${kb(BUDGET)})`);
 if (total > BUDGET) {
 	console.error('Over budget.');
