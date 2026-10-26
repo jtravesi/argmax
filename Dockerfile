@@ -1,12 +1,10 @@
 # syntax=docker/dockerfile:1
 
 # Argmax: static SvelteKit build served by an unprivileged nginx.
-# Pin both base images by digest before the first release (see ARCHITECTURE.md §7).
-
-ARG NODE_VERSION=24
+# Base images are pinned by digest (ARCHITECTURE.md §7); Dependabot keeps them current.
 
 # ---- Build stage -------------------------------------------------------------
-FROM node:${NODE_VERSION}-alpine AS build
+FROM node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -19,18 +17,24 @@ ENV BASE_PATH=${BASE_PATH}
 RUN npm run build
 
 # ---- Runtime stage -----------------------------------------------------------
-FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
+FROM nginxinc/nginx-unprivileged:stable-alpine@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03 AS runtime
 
 LABEL org.opencontainers.image.title="Argmax" \
       org.opencontainers.image.description="Decision making under uncertainty with expected utility. Runs entirely in the browser." \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/jtravesi/argmax"
 
+# Apply Alpine security fixes released after the base image (the Trivy scan in CI
+# fails on fixable HIGH/CRITICAL issues), then drop back to the unprivileged user.
+USER root
+RUN apk upgrade --no-cache
+USER 101
+
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker/security-headers.conf /etc/nginx/snippets/security-headers.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
-# The base image already runs as the non-root "nginx" user (uid 101).
+# Runs as the non-root "nginx" user (uid 101) of the base image.
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
