@@ -23,6 +23,12 @@ export const en = {
 		model: 'The model',
 		about: 'About'
 	},
+	theme: {
+		auto: 'Theme: automatic',
+		light: 'Theme: light',
+		dark: 'Theme: dark',
+		help: 'Changes between automatic (as your system), light and dark'
+	},
 	footer: {
 		repository: 'Source code',
 		license: 'MIT license'

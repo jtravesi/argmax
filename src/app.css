@@ -1,58 +1,48 @@
-/* Design tokens (ARCHITECTURE.md §9): sober, readable, light and dark. */
+/* Design tokens (ARCHITECTURE.md §9): sober and readable, light and dark.
+ * Each colour is defined once with light-dark(); the theme only sets color-scheme:
+ * the system's by default, or the one chosen with the toggle (static/theme.js). */
 :root {
-	--color-bg: #fdfdfc;
-	--color-surface: #f3f4f6;
-	--color-fg: #1c1f24;
-	--color-muted: #545c68;
-	--color-border: #d3d7dd;
-	--color-accent: #1f4fbf;
-	--color-accent-fg: #ffffff;
-	--color-ok: #17703a;
-	--color-warn: #8a5300;
-	--color-error: #b42318;
-	--color-focus: #1f4fbf;
-	--color-bar: #1f4fbf;
-	--series-1: #1f4fbf;
-	--series-2: #c2410c;
-	--series-3: #0f766e;
-	--series-4: #7e22ce;
-	--series-5: #a16207;
-	--series-6: #be185d;
-	--series-7: #4d7c0f;
-	--series-8: #475569;
-	--radius: 6px;
 	color-scheme: light dark;
+	--color-bg: light-dark(#fdfdfc, #15171b);
+	--color-surface: light-dark(#f3f4f6, #1f2228);
+	--color-fg: light-dark(#1c1f24, #e6e8eb);
+	--color-muted: light-dark(#545c68, #a0a7b2);
+	--color-border: light-dark(#d3d7dd, #3a4049);
+	--color-accent: light-dark(#1f4fbf, #8fb0ff);
+	--color-accent-fg: light-dark(#ffffff, #0b1020);
+	--color-ok: light-dark(#17703a, #5fd08a);
+	--color-warn: light-dark(#8a5300, #f0b552);
+	--color-error: light-dark(#b42318, #ff8a80);
+	--color-focus: light-dark(#1f4fbf, #8fb0ff);
+	--color-bar: light-dark(#1f4fbf, #8fb0ff);
+	--series-1: light-dark(#1f4fbf, #8fb0ff);
+	--series-2: light-dark(#c2410c, #fb923c);
+	--series-3: light-dark(#0f766e, #2dd4bf);
+	--series-4: light-dark(#7e22ce, #c084fc);
+	--series-5: light-dark(#a16207, #facc15);
+	--series-6: light-dark(#be185d, #f472b6);
+	--series-7: light-dark(#4d7c0f, #a3e635);
+	--series-8: light-dark(#475569, #94a3b8);
+	--radius: 6px;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--color-bg: #15171b;
-		--color-surface: #1f2228;
-		--color-fg: #e6e8eb;
-		--color-muted: #a0a7b2;
-		--color-border: #3a4049;
-		--color-accent: #8fb0ff;
-		--color-accent-fg: #0b1020;
-		--color-ok: #5fd08a;
-		--color-warn: #f0b552;
-		--color-error: #ff8a80;
-		--color-focus: #8fb0ff;
-		--color-bar: #8fb0ff;
-		--series-1: #8fb0ff;
-		--series-2: #fb923c;
-		--series-3: #2dd4bf;
-		--series-4: #c084fc;
-		--series-5: #facc15;
-		--series-6: #f472b6;
-		--series-7: #a3e635;
-		--series-8: #94a3b8;
-	}
+:root[data-theme='light'] {
+	color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
 }
 
 *,
 *::before,
 *::after {
 	box-sizing: border-box;
+}
+
+/* WCAG 2.4.11: the sticky header must not hide the focused element or an anchor target. */
+html {
+	scroll-padding-top: 4.5rem;
 }
 
 body {
