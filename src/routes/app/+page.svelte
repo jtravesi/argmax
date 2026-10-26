@@ -5,7 +5,9 @@
 	import { blankModel } from '#lib/model/edit.js';
 	import { clearSaved, loadSaved, save } from '#lib/persistence/local.js';
 	import { Editor } from '#lib/stores/editor.svelte.js';
-	import { careerTemplate } from '#lib/templates/index.js';
+	import { careerTemplate, findTemplate } from '#lib/templates/index.js';
+	import { resolve } from '$app/paths';
+	import { replaceState } from '$app/navigation';
 
 	const editor = new Editor();
 	let restored = $state(false);
@@ -21,6 +23,15 @@
 		if (saved.status === 'ok') editor.model = saved.model;
 		else if (saved.status === 'unavailable') storageUnavailable = true;
 		else if (saved.status === 'invalid') savedInvalid = true;
+
+		// /app?template=<id>, from the home page. Never replace a saved model silently.
+		const templateId = new URL(location.href).searchParams.get('template');
+		const template = templateId ? findTemplate(templateId) : undefined;
+		if (template && (saved.status !== 'ok' || confirm(t.app.confirmTemplate(template.title)))) {
+			editor.replace(template.create());
+		}
+		if (templateId !== null) replaceState(resolve('/app'), {});
+
 		restored = true;
 	});
 

@@ -91,3 +91,14 @@ describe('number formats (SPEC.md §3.2)', () => {
 		expect(toPercentInput(Number.NaN)).toBeNaN();
 	});
 });
+
+describe('template registry', () => {
+	it('finds templates by id and creates fresh models', async () => {
+		const { findTemplate, TEMPLATES } = await import('../../src/lib/templates');
+		expect(TEMPLATES.map((t) => t.id)).toContain('career');
+		const career = findTemplate('career');
+		expect(career?.title).toBe('Career crossroads');
+		expect(career?.create()).not.toBe(career?.create());
+		expect(findTemplate('nope')).toBeUndefined();
+	});
+});

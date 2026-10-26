@@ -12,3 +12,23 @@ const CAREER = load(career, 'career');
 
 /** A fresh copy each time, so editing it never changes the template. */
 export const careerTemplate = (): DecisionModel => structuredClone(CAREER);
+
+export interface Template {
+	id: string;
+	title: string;
+	description: string;
+	create: () => DecisionModel;
+}
+
+/** Templates 2–4 of SPEC.md §5 arrive with M5. */
+export const TEMPLATES: readonly Template[] = [
+	{
+		id: 'career',
+		title: CAREER.title,
+		description: CAREER.description ?? '',
+		create: careerTemplate
+	}
+];
+
+export const findTemplate = (id: string): Template | undefined =>
+	TEMPLATES.find((t) => t.id === id);
