@@ -36,11 +36,11 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M4 · Sensitivity
 
-- [ ] Expected profile and dominance notice.
-- [ ] "What if" sliders with a Reset button.
-- [ ] Tipping points for weights and probabilities.
-- [ ] Tornado with adjustable $h$.
-- [ ] Every chart has an equivalent accessible table.
+- [x] Expected profile and dominance notice.
+- [x] "What if" sliders with a Reset button.
+- [x] Tipping points for weights and probabilities.
+- [x] Tornado with adjustable $h$.
+- [x] Every chart has an equivalent accessible table.
 
 ## M5 · Persistence and sharing
 

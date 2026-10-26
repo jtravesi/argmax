@@ -56,8 +56,8 @@ In this order:
 3. **Breakdown per alternative.** Table of states: normalized probability, $u(a,s)$, contribution $c(a,s)$. Stacked bar of contributions.
 4. **Risk profile.** Per alternative: worst case, best case, $\sigma$ and $P_\tau$ with adjustable $\tau$. Range visualization (min–mean–max).
 5. **Expected profile.** Table or chart of $\bar{x}_{a,d}$ per alternative and dimension. If there is dominance (`MODEL.md` §6), a highlighted message: "*A* beats *B* whatever the weights."
-6. **Interactive sensitivity.** Sliders for every weight and every probability that recompute a "what if" ranking live, without changing the saved model. "Reset" button.
-7. **Tipping points.** For each dimension, the exact weight at which the second alternative would overtake the first (`MODEL.md` §5.1), or "no weight changes the order". The same for the state probabilities of the top two (§5.2).
+6. **Interactive sensitivity.** Sliders for every weight and every probability that recompute a "what if" ranking live, without changing the saved model. "Reset" button. Moving one slider rescales the others proportionally, as in `MODEL.md` §5.1 and §5.2; if the moved value was at 100%, the baseline proportions are used.
+7. **Tipping points.** For each dimension, the exact weight at which the second alternative would overtake the first (`MODEL.md` §5.1), or "no weight changes the order". The same for the state probabilities of the top two (§5.2). Each tipping point says whether the change happens above or below the current value (e.g. "above 72.2%").
 8. **Tornado.** `MODEL.md` §5.4, with adjustable $h$ (0.05 / 0.10 / 0.20).
 9. **Closing reminder.** "The model does not decide for you. If the result does not match your intuition, ask yourself what you are modeling wrong, or what is biasing your intuition."
 
