@@ -114,7 +114,7 @@ Claude Code writes templates 2 and 3 with plausible values, and they must be con
 - **Theme:** light and dark following `prefers-color-scheme`, with a manual toggle.
 - **Language:** English UI. Every string lives in a dictionary so other languages can be added without touching components.
 - **Browsers:** last two versions of Chrome, Firefox and Safari.
-- **Deployment:** the same static build runs on GitHub Pages (public demo) and in a Docker container (self-hosting and local use). See `ARCHITECTURE.md` §8.
+- **Deployment:** the same static build runs on Cloudflare Pages (public demo) and in a Docker container (self-hosting and local use). See `ARCHITECTURE.md` §8.
 
 ---
 

@@ -52,13 +52,13 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M6 · Polish and release
 
-- [ ] In-page CSP active and verified (no console errors), both on Pages and in Docker.
-- [ ] Light and dark theme with toggle.
-- [ ] WCAG 2.2 AA review.
-- [ ] Performance budget from `SPEC.md` §7 met.
-- [ ] `pages.yml` deploying to GitHub Pages.
-- [ ] `docker.yml` publishing multi-arch images to GHCR; Trivy scan in CI; Dependabot active for npm, Actions and Docker.
-- [ ] README with screenshot, demo link, Docker instructions and how to contribute.
+- [ ] In-page CSP active and verified (no console errors), both on Pages and in Docker. (Active, and verified in Docker, also in CI; on Pages with `tests/e2e/csp.spec.ts` once deployed.)
+- [x] Light and dark theme with toggle.
+- [x] WCAG 2.2 AA review.
+- [x] Performance budget from `SPEC.md` §7 met.
+- [ ] `pages.yml` deploying to Cloudflare Pages (the workflow is ready; it deploys once the Cloudflare secrets are set).
+- [ ] `docker.yml` publishing multi-arch images to GHCR; Trivy scan in CI; Dependabot active for npm, Actions and Docker. (Trivy and Dependabot active; `docker.yml` is ready and first runs with the `v1.0.0` tag.)
+- [ ] README with screenshot, demo link, Docker instructions and how to contribute. (Everything but the demo link, which comes with the deployment.)
 - [ ] First release tagged `v1.0.0`.
 
 ## Later (do not implement unless asked)

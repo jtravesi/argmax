@@ -2,7 +2,7 @@
 
 ## What this project is
 
-**Argmax** is a public, open-source (MIT) website for making decisions under uncertainty with multi-attribute expected utility: the user defines alternatives, states with probabilities, dimensions with weights, and scores, and gets a ranking with a sensitivity analysis. Everything is computed in the browser; there is no backend. It ships as a static site on GitHub Pages and as a Docker image for self-hosting.
+**Argmax** is a public, open-source (MIT) website for making decisions under uncertainty with multi-attribute expected utility: the user defines alternatives, states with probabilities, dimensions with weights, and scores, and gets a ranking with a sensitivity analysis. Everything is computed in the browser; there is no backend. It ships as a static site on Cloudflare Pages and as a Docker image for self-hosting.
 
 ## Documents: read them before writing code
 

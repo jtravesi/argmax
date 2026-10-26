@@ -2,7 +2,7 @@
 
 ## 1. Principles
 
-1. **Fully static, client-side.** No backend. The same build is served from GitHub Pages and from a Docker container.
+1. **Fully static, client-side.** No backend. The same build is served from Cloudflare Pages and from a Docker container.
 2. **Pure core.** All the mathematics lives in `src/lib/core/`: pure TypeScript functions with no UI or browser dependencies. It is the most heavily tested part.
 3. **Inputs are the only state.** Results are always derived from the model and never stored.
 4. **Minimal dependencies.** Every runtime dependency must be justified. Charts are hand-written SVG, no chart library.
@@ -78,8 +78,10 @@ argmax/
 │       ├── app/+page.svelte
 │       ├── model/+page.server.ts  # renders docs/MODEL.md at build time (csr = false)
 │       └── about/+page.svelte
+├── scripts/                # check-budget.ts, cf-headers.ts (run with Node 24)
 ├── tests/
-│   ├── core/               # Vitest
+│   ├── core/               # Vitest: oracle, properties, validation
+│   ├── unit/               # Vitest: everything outside the core
 │   └── e2e/                # Playwright
 ├── static/                 # self-hosted fonts, favicon
 └── .github/
@@ -190,7 +192,7 @@ There is no server, but the app processes untrusted data: imported JSON, the URL
 - **Limits before processing:** imported file ≤ 256 KB; fragment ≤ 32 KB compressed; decompressed size ≤ 256 KB (abort when exceeded). lz-string's own decompressor has no limit (a 32 KB fragment can expand quadratically) and accepts some garbage, so `persistence/share.ts` decompresses with a bounded port of it that stops as soon as the output passes 256 KB and rejects characters outside its alphabet; lz-string is used only to compress.
 - **Prototype pollution:** `scores` keys are checked against dimension ids; `__proto__`, `constructor` and `prototype` are rejected as ids; lookups by id use prototype-less objects or `Map`.
 - **XSS:** never `{@html}` with user data. The only allowed `{@html}` is the HTML generated from `MODEL.md` at build time. Names are always rendered as text.
-- **CSP in the page** through SvelteKit's `kit.csp` (meta tag with hashes on prerendered pages): `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'` (KaTeX uses `style` attributes); `img-src 'self' data:`; `font-src 'self'`; `connect-src 'none'`; `object-src 'none'`; `base-uri 'self'`; `form-action 'none'`. This is what protects the GitHub Pages deployment, which cannot set custom headers.
+- **CSP in the page** through SvelteKit's `kit.csp` (meta tag with hashes on prerendered pages): `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'` (KaTeX uses `style` attributes); `img-src 'self' data:`; `font-src 'self'`; `connect-src 'none'`; `object-src 'none'`; `base-uri 'self'`; `form-action 'none'`. It works wherever the site is hosted, even without control over HTTP headers; the headers of §8 add what a meta tag cannot express.
 - **HTTP headers in Docker** (§8): nginx adds the protections a meta tag cannot provide. See §8 for how both CSPs combine.
 - **No external requests:** self-hosted fonts, no CDNs, no analytics. An e2e test asserts there are no requests to other origins.
 - **Supply chain:** `package-lock.json` committed; `npm ci` in CI; `npm audit --audit-level=high` in CI; Dependabot for npm, GitHub Actions and Docker; actions pinned by SHA; minimal `permissions:` in each workflow; base images pinned by digest; container image scanned with Trivy.
@@ -198,20 +200,22 @@ There is no server, but the app processes untrusted data: imported JSON, the URL
 
 ## 8. Deployment
 
-The same static build has two targets. The only difference is the base path.
+The same static build has two targets, both served from the root.
 
-| Target | Base path | Who it is for |
-|---|---|---|
-| GitHub Pages | `/argmax` | Public demo. |
-| Docker | `/` (root) | Self-hosting, local testing. |
+| Target | Base path | Security headers | Who it is for |
+|---|---|---|---|
+| Cloudflare Pages | `/` (root) | `_headers`, generated from `docker/security-headers.conf` at deploy time | Public demo. |
+| Docker | `/` (root) | `docker/security-headers.conf`, in every nginx `location` | Self-hosting, local testing. |
 
-SvelteKit reads the base path from the `BASE_PATH` environment variable at build time (`kit.paths.base = process.env.BASE_PATH ?? ''`).
+SvelteKit reads the base path from the `BASE_PATH` environment variable at build time (`kit.paths.base = process.env.BASE_PATH ?? ''`), so the site can also be hosted under a subpath. Cloudflare Pages was chosen over GitHub Pages because it can send the same HTTP security headers as the Docker image; Cloudflare's own analytics stay off (SPEC.md §1, privacy).
+
+Both targets are checked by the same end-to-end tests: `BASE_URL=<site> npx playwright test tests/e2e/csp.spec.ts tests/e2e/headers.spec.ts` verifies the CSP meta tag and the headers together.
 
 ### 8.1 Docker
 
-Files at the repository root (already drafted; validate and adjust them in M0):
+Files at the repository root:
 
-- `Dockerfile`: multi-stage. Stage `build` (Node LTS on Alpine) runs `npm ci` and `npm run build`. Stage `runtime` (`nginxinc/nginx-unprivileged`, Alpine) copies only the build output and the nginx config. Runs as a non-root user on port **8080**, with a `HEALTHCHECK`.
+- `Dockerfile`: multi-stage, both base images pinned by digest. Stage `build` (Node LTS on Alpine) runs `npm ci` and `npm run build`. Stage `runtime` (`nginxinc/nginx-unprivileged`, Alpine) applies Alpine security updates, then copies only the build output and the nginx config. Runs as a non-root user on port **8080**, with a `HEALTHCHECK`.
 - `docker/nginx.conf`: serves prerendered pages (`try_files $uri $uri.html $uri/index.html =404`), long-lived cache for `/_app/immutable/`, `no-cache` for HTML, gzip, `server_tokens off`.
 - `docker/security-headers.conf`: security headers, included in **every** `location` block. In nginx, an `add_header` inside a `location` discards all headers inherited from the `server` block, so headers cannot simply be declared once at the top.
 - `compose.yaml`: one service hardened with `read_only`, `tmpfs: /tmp`, `cap_drop: ALL` and `no-new-privileges`.
@@ -230,8 +234,8 @@ TLS (and HSTS) belong to the reverse proxy in front of the container (Caddy, Tra
 
 ### 8.2 CI/CD
 
-- `ci.yml` (push and PR): lint, `svelte-check`, Vitest with coverage, pytest, build, Playwright against the build, `docker build`, and a Trivy scan of the image (fail on HIGH/CRITICAL with an available fix).
-- `pages.yml` (push to `main`): build with `BASE_PATH=/argmax` and deploy to GitHub Pages with `actions/upload-pages-artifact` and `actions/deploy-pages`.
+- `ci.yml` (push and PR): lint, `svelte-check`, Vitest with coverage, pytest, build, the performance budget, Playwright against the build, `docker build`, a Trivy scan of the image (fail on HIGH/CRITICAL with an available fix), and the CSP and header tests against the running container.
+- `pages.yml` (after `ci.yml` passes on `main`, or by hand): build, generate `build/_headers` from `docker/security-headers.conf` with `scripts/cf-headers.ts`, and deploy to Cloudflare Pages with `wrangler pages deploy` (direct upload: the build runs on GitHub). It does nothing until the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets are set; the project name comes from the `CLOUDFLARE_PROJECT` variable (default `argmax`).
 - `docker.yml` (tag `v*`): multi-arch build (`linux/amd64`, `linux/arm64`) and push to `ghcr.io/jtravesi/argmax` with tags `vX.Y.Z` and `latest`, SBOM and provenance attestations enabled.
 
 ## 9. Accessibility and interface
@@ -240,3 +244,5 @@ TLS (and HSTS) belong to the reverse proxy in front of the container (Caddy, Tra
 - Colors defined as CSS tokens with light and dark variants.
 - SVG charts have `role="img"`, an `aria-label` and an accessible equivalent table.
 - Validation messages use `aria-live="polite"`.
+- Light and dark themes: colours are defined once with `light-dark()` and follow the system unless the user picks one; `static/theme.js` applies the choice before the first paint and also works on the pages without app JavaScript.
+- WCAG 2.2 AA: `tests/e2e/a11y.spec.ts` runs axe-core on every page, wizard step and the results in both themes. What automation cannot judge was reviewed by hand: keyboard-only use (also an e2e test), visible focus that the sticky header never hides (2.4.11), no information by colour alone (1.4.1), reflow at 320 px (an e2e test), `prefers-reduced-motion`, and accessible names that contain the visible label (2.5.3).

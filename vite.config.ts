@@ -3,7 +3,8 @@ import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 
-// ARCHITECTURE.md §8: "" for Docker (served at the root), "/argmax" for GitHub Pages.
+// ARCHITECTURE.md §8: served from the root ("") on Cloudflare Pages and in Docker;
+// any other path, e.g. "/argmax", if the site is hosted under a subpath.
 const basePath = process.env.BASE_PATH ?? '';
 if (basePath !== '' && (!basePath.startsWith('/') || basePath.endsWith('/'))) {
 	throw new Error(`BASE_PATH must be empty or start (but not end) with "/", got "${basePath}"`);
@@ -33,7 +34,7 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			// Every page is prerendered; 404.html is the fallback for nginx and GitHub Pages.
+			// Every page is prerendered; 404.html is the fallback for nginx and Cloudflare Pages.
 			adapter: adapter({ fallback: '404.html' }),
 			paths: { base: basePath as '' | `/${string}` },
 			// ARCHITECTURE.md §7: a meta tag with hashes on every prerendered page. It is what
