@@ -28,7 +28,7 @@ test('the example template gives the expected ranking', async ({ page }) => {
 	);
 	await expect(verdict).toContainText('Moderate decision');
 
-	const ranking = page.getByRole('region', { name: 'Ranking' }).getByRole('listitem');
+	const ranking = page.getByRole('region', { name: 'Ranking' }).locator('tbody tr');
 	await expect(ranking).toHaveText([
 		/Stay and look for a new job/,
 		/Sabbatical year for personal projects\s*5\.20/,
