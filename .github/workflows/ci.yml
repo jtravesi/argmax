@@ -61,6 +61,13 @@ jobs:
           load: true
           push: false
           tags: argmax:ci
+      - name: Scan the image for vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: argmax:ci
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
       - name: Smoke test the hardened container
         run: |
           docker run -d --name argmax -p 8080:8080 --read-only --tmpfs /tmp \
@@ -71,3 +78,14 @@ jobs:
           for path in / /app /model /about; do
             curl -sfI "http://localhost:8080$path" | tee /dev/stderr | grep -qi "^content-security-policy: frame-ancestors 'none'"
           done
+      # The page's CSP meta tag and nginx's header must work together (ROADMAP.md M6).
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: CSP, headers and pages against the container
+        run: npx playwright test tests/e2e/csp.spec.ts tests/e2e/headers.spec.ts tests/e2e/theme.spec.ts tests/e2e/content.spec.ts
+        env:
+          BASE_URL: http://localhost:8080
