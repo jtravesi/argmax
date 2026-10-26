@@ -14,7 +14,7 @@
 | Framework | **SvelteKit + Svelte 5** (runes) | Natural reactivity for forms with live computation; small bundles. |
 | Output | **`@sveltejs/adapter-static`** with prerendering | Static pages; `/model` and `/about` are plain HTML. |
 | Language | **TypeScript** in `strict` mode | |
-| Markdown + math | **mdsvex** + **remark-math** + **rehype-katex** | `MODEL.md` is turned into HTML with KaTeX **at build time**: no KaTeX JS on the client, only its CSS and fonts. |
+| Markdown + math | **unified** (remark-parse, remark-gfm, **remark-math**, remark-rehype, rehype-slug, **rehype-katex**) | `MODEL.md` is turned into HTML with KaTeX **at build time** in a prerendered `+page.server.ts`: no KaTeX JS on the client, only its CSS and woff2 fonts. Build-time only, so all of it is a dev dependency. mdsvex was the first choice, but it cannot compile `MODEL.md`: Svelte reads the braces of the LaTeX as expressions, and mdsvex only works with remark-math 3 / rehype-katex 5 (2020). |
 | Validation | **zod** | One schema for JSON import, shared URLs and `localStorage`. |
 | URL compression | **lz-string** (`compressToEncodedURIComponent`) | |
 | Charts | Hand-written **SVG components** | Bars, stacked bar, range and tornado are simple; no extra dependency. |
@@ -63,6 +63,7 @@ argmax/
 │   │   │   ├── dominance.ts
 │   │   │   ├── analyze.ts      # analyze(): everything the results page shows
 │   │   │   └── index.ts
+│   │   ├── server/         # build-time only: markdown.ts
 │   │   ├── persistence/    # localStorage, export/import, URL
 │   │   ├── i18n/           # en.ts
 │   │   ├── stores/         # model state with runes
@@ -75,7 +76,7 @@ argmax/
 │       ├── +layout.svelte
 │       ├── +page.svelte        # Home
 │       ├── app/+page.svelte
-│       ├── model/+page.svx     # imports docs/MODEL.md
+│       ├── model/+page.server.ts  # renders docs/MODEL.md at build time (csr = false)
 │       └── about/+page.svelte
 ├── tests/
 │   ├── core/               # Vitest

@@ -30,9 +30,9 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M3 · Content pages
 
-- [ ] `/model` renders `docs/MODEL.md` with KaTeX at build time and a side table of contents.
-- [ ] `/about` according to `SPEC.md` §6.
-- [ ] `/` (home) with templates.
+- [x] `/model` renders `docs/MODEL.md` with KaTeX at build time and a side table of contents.
+- [x] `/about` according to `SPEC.md` §6.
+- [x] `/` (home) with templates.
 
 ## M4 · Sensitivity
 
