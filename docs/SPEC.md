@@ -88,7 +88,7 @@ Shipped as JSON in the repository:
 1. **Career crossroads** (`fixtures/career-decision.json`; also the test oracle).
 2. **Choosing between job offers.**
 3. **Choosing a flat.**
-4. **Guided blank template** (2 alternatives, 3 typical dimensions, 3 empty states per alternative).
+4. **Guided blank template** (2 alternatives, 3 typical dimensions, 3 empty states per alternative). Templates go through `parseModel`, which requires names, so the "empty" states carry guiding names to rename (Best case, Most likely, Worst case) and neutral scores of 5.
 
 Claude Code writes templates 2 and 3 with plausible values, and they must be consistent (probabilities summing to 1, reasonable scores).
 

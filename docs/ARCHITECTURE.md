@@ -71,7 +71,7 @@ argmax/
 │   │   │   ├── wizard/
 │   │   │   ├── results/
 │   │   │   └── charts/     # hand-written SVG
-│   │   └── templates/      # template JSON (imports fixtures/)
+│   │   └── templates/      # templates 2–4 as JSON; template 1 is fixtures/career-decision.json
 │   └── routes/
 │       ├── +layout.svelte
 │       ├── +page.svelte        # Home
@@ -187,7 +187,7 @@ Core branch coverage target: ≥ 95%.
 There is no server, but the app processes untrusted data: imported JSON, the URL fragment and `localStorage`.
 
 - **Strict validation on every input** with the same zod schema. Nothing enters the state without going through `parseModel`.
-- **Limits before processing:** imported file ≤ 256 KB; fragment ≤ 32 KB compressed; decompressed size ≤ 256 KB (abort when exceeded).
+- **Limits before processing:** imported file ≤ 256 KB; fragment ≤ 32 KB compressed; decompressed size ≤ 256 KB (abort when exceeded). lz-string's own decompressor has no limit (a 32 KB fragment can expand quadratically) and accepts some garbage, so `persistence/share.ts` decompresses with a bounded port of it that stops as soon as the output passes 256 KB and rejects characters outside its alphabet; lz-string is used only to compress.
 - **Prototype pollution:** `scores` keys are checked against dimension ids; `__proto__`, `constructor` and `prototype` are rejected as ids; lookups by id use prototype-less objects or `Map`.
 - **XSS:** never `{@html}` with user data. The only allowed `{@html}` is the HTML generated from `MODEL.md` at build time. Names are always rendered as text.
 - **CSP in the page** through SvelteKit's `kit.csp` (meta tag with hashes on prerendered pages): `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'` (KaTeX uses `style` attributes); `img-src 'self' data:`; `font-src 'self'`; `connect-src 'none'`; `object-src 'none'`; `base-uri 'self'`; `form-action 'none'`. This is what protects the GitHub Pages deployment, which cannot set custom headers.

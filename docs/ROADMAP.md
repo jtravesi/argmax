@@ -16,7 +16,7 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 - [x] `src/lib/core/` complete according to `ARCHITECTURE.md` §5.
 - [x] Oracle test green.
-- [x] All properties in `ARCHITECTURE.md` §6 implemented with fast-check (the URL round trip lands in M5, with the URL encoding).
+- [x] All properties in `ARCHITECTURE.md` §6 implemented with fast-check (the URL round trip landed in M5, with the URL encoding).
 - [x] One test per validation rule.
 - [x] Core branch coverage ≥ 95%.
 
@@ -44,11 +44,11 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M5 · Persistence and sharing
 
-- [ ] JSON export and import with validation and size limits.
-- [ ] Share by URL fragment, with the privacy warning.
-- [ ] Handling the conflict between a saved model and a shared link.
-- [ ] Templates 2–4 from `SPEC.md` §5.
-- [ ] E2E tests from `ARCHITECTURE.md` §6, including malicious JSON and no external requests.
+- [x] JSON export and import with validation and size limits.
+- [x] Share by URL fragment, with the privacy warning.
+- [x] Handling the conflict between a saved model and a shared link.
+- [x] Templates 2–4 from `SPEC.md` §5.
+- [x] E2E tests from `ARCHITECTURE.md` §6, including malicious JSON and no external requests.
 
 ## M6 · Polish and release
 
