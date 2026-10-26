@@ -14,11 +14,11 @@ Work through the milestones in order and tick each box when done. A milestone is
 
 ## M1 · Mathematical core
 
-- [ ] `src/lib/core/` complete according to `ARCHITECTURE.md` §5.
-- [ ] Oracle test green.
-- [ ] All properties in `ARCHITECTURE.md` §6 implemented with fast-check.
-- [ ] One test per validation rule.
-- [ ] Core branch coverage ≥ 95%.
+- [x] `src/lib/core/` complete according to `ARCHITECTURE.md` §5.
+- [x] Oracle test green.
+- [x] All properties in `ARCHITECTURE.md` §6 implemented with fast-check (the URL round trip lands in M5, with the URL encoding).
+- [x] One test per validation rule.
+- [x] Core branch coverage ≥ 95%.
 
 ## M2 · Wizard and basic results
 

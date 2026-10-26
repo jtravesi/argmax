@@ -61,6 +61,7 @@ argmax/
 │   │   │   ├── risk.ts         # worst/best case, variance, P_tau
 │   │   │   ├── sensitivity.ts  # §5.1–5.4, tipping points, tornado
 │   │   │   ├── dominance.ts
+│   │   │   ├── analyze.ts      # analyze(): everything the results page shows
 │   │   │   └── index.ts
 │   │   ├── persistence/    # localStorage, export/import, URL
 │   │   ├── i18n/           # en.ts
@@ -132,25 +133,29 @@ For future versions, `schema.ts` exposes `parseModel(unknown): Result<DecisionMo
 Indicative signatures. All functions are pure and never mutate their arguments. Python equivalents in `python/argmax.py` use the same names in snake_case.
 
 ```ts
+parseModel(unknown): Result<DecisionModel, Issue[]>   // schema.ts; also serialize / deserialize
 validate(model): { errors: Issue[]; warnings: Issue[] }
-normalize(model): NormalizedModel   // weights and probabilities on the simplex
+normalize(model): NormalizedModel | null   // weights and probabilities on the simplex; null with errors
 
 stateUtility(nm, altId, stateId): number
-expectedProfile(nm, altId): Record<DimId, number>
+expectedProfile(nm, altId): Map<DimId, number>
 expectedUtility(nm, altId): number
-rank(nm): { altId: string; eu: number }[]   // descending; ties keep input order
-analyze(model): AnalysisResult               // everything in SPEC §3.2 in one object
+contributions(nm, altId): Map<StateId, number>
+rank(nm): { altId: string; eu: number }[]   // descending; ties (within EPS) keep input order
+analyze(model, { tau, h }): AnalysisResult   // everything in SPEC §3.2 in one object (analyze.ts)
 
 riskProfile(nm, altId, tau = 5): { worst; best; variance; stdDev; pBelowTau }
 
-withDimensionWeight(nm, dimId, t): NormalizedModel          // §5.1
-withStateProbability(nm, altId, stateId, q): NormalizedModel // §5.2
+withDimensionWeight(nm, dimId, t): NormalizedModel | null           // §5.1
+withStateProbability(nm, altId, stateId, q): NormalizedModel | null // §5.2
 tippingWeight(nm, dimId, a, b): number | null               // closed form
 tippingProbability(nm, altId, stateId, b): number | null    // closed form
-scoreThreshold(nm, altId, stateId, dimId, b): number | null
+scoreThreshold(nm, altId, stateId, dimId, b): number | null // the score x + δ (§5.3)
 tornado(nm, h = 0.1): TornadoBar[]
 dominance(nm): { dominant: AltId; dominated: AltId }[]
 ```
+
+Lookups inside a `NormalizedModel` use `Map`. Issues carry a stable `code` and a `path` into the model; the UI translates them. Unknown ids and out-of-range arguments (`t`, `q`, `h`) are programming errors and throw; a tipping point is returned only when it lies in $[0,1]$ (or $[0,10]$ for a score), with no tolerance or clamping.
 
 Constant `EPS = 1e-9` for ties and comparisons with zero. Degenerate cases (`w_k = 1`, `p_a(j) = 1`, zero denominator) return `null` instead of dividing by zero.
 
