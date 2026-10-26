@@ -8,12 +8,14 @@
 		label,
 		value,
 		invalid = false,
+		disabled = false,
 		onchange
 	}: {
 		id: string;
 		label: string;
 		value: number;
 		invalid?: boolean;
+		disabled?: boolean;
 		onchange: (fraction: number) => void;
 	} = $props();
 
@@ -30,6 +32,7 @@
 		step="1"
 		value={Number.isFinite(percent) ? percent : 0}
 		aria-label={label}
+		{disabled}
 		oninput={set}
 	/>
 	<input
@@ -42,6 +45,7 @@
 		value={percent}
 		aria-label={label}
 		aria-invalid={invalid}
+		{disabled}
 		oninput={set}
 	/>
 </div>
