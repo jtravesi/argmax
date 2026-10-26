@@ -34,8 +34,61 @@ export const en = {
 		about: { title: 'About · Argmax', heading: 'About' }
 	},
 
+	home: {
+		lead: 'A step-by-step guide to deciding under uncertainty: list your options, what could happen with each and how likely it is, what you care about and how much, and get the expected utility of every option together with a sensitivity analysis.',
+		purpose:
+			'It is for decisions that matter and do not have an obvious answer: a job change, a move, a big purchase. The process matters more than the number: it makes your beliefs explicit and checks that they are consistent.',
+		howHeading: 'How it works',
+		how: [
+			{
+				title: 'Describe the decision',
+				text: 'Your alternatives and, for each one, the outcomes that could follow and how likely you think they are.'
+			},
+			{
+				title: 'Say what matters',
+				text: 'The dimensions you care about, how much each one weighs, and a score from 0 to 10 for every outcome.'
+			},
+			{
+				title: 'Read the result',
+				text: 'The expected utility of each alternative, its risk, and how much your inputs would have to change for the ranking to change.'
+			}
+		],
+		start: 'Get started',
+		templatesHeading: 'Start from an example',
+		useTemplate: 'Use this template',
+		useTemplateLabel: (title: string) => `Use this template: ${title}`,
+		privacy: 'Private by design: everything runs in your browser and nothing you enter leaves it.'
+	},
+
+	about: {
+		authorHeading: 'Author',
+		author: (name: string) => `Made by ${name}.`,
+		profile: 'GitHub profile',
+		repository: 'Source code on GitHub',
+		license: 'MIT license',
+		privacyHeading: 'Privacy',
+		privacy: [
+			'There is no server behind this site: no accounts, no cookies, no analytics and no requests to third parties.',
+			'Anything you save lives only in this browser, and it is removed when you clear the site data.'
+		],
+		disclaimerHeading: 'Disclaimer',
+		disclaimer:
+			'Argmax is an educational tool to support reflection. It is not professional advice, whether financial, medical, legal or psychological.',
+		selfHostHeading: 'Run it yourself',
+		selfHost: 'Argmax is a static site. To run your own copy with Docker:',
+		readme: 'More options in the README',
+		contributeHeading: 'Contribute',
+		contribute: 'Found a problem or have an idea?',
+		issues: 'Open an issue on GitHub'
+	},
+
+	model: {
+		contents: 'Contents'
+	},
+
 	app: {
 		toolbar: 'Model',
+		confirmTemplate: (title: string) => `Replace your saved model with the template “${title}”?`,
 		newModel: 'New model',
 		confirmNew: 'Start a new model? The current one will be discarded.',
 		loadExample: 'Load example',
