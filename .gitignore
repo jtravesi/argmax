@@ -7,4 +7,7 @@ playwright-report/
 __pycache__/
 .pytest_cache/
 .env*
+!.env.example
 .DS_Store
+Thumbs.db
+vite.config.ts.timestamp-*
