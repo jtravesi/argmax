@@ -4,7 +4,8 @@ async function exampleResults(page: Page) {
 	page.on('dialog', (dialog) => dialog.accept());
 	await page.goto('/app');
 	await page.waitForLoadState('networkidle');
-	await page.getByRole('button', { name: 'Load example' }).click();
+	await page.getByText('Load template').click();
+	await page.getByRole('button', { name: 'Career crossroads' }).click();
 	await page.getByRole('button', { name: 'See results' }).click();
 }
 

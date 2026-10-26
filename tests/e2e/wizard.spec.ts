@@ -10,7 +10,8 @@ async function open(page: Page) {
 
 async function loadExample(page: Page) {
 	await open(page);
-	await page.getByRole('button', { name: 'Load example' }).click();
+	await page.getByText('Load template').click();
+	await page.getByRole('button', { name: 'Career crossroads' }).click();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Career crossroads');
 }
 
@@ -152,7 +153,9 @@ test('the whole flow works with the keyboard only', async ({ page }) => {
 		throw new Error(`could not reach ${name} with Tab`);
 	}
 
-	await tabTo('Load example');
+	await tabTo('Load template');
+	await page.keyboard.press('Enter');
+	await tabTo('Career crossroads');
 	await page.keyboard.press('Enter');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Career crossroads');
 
