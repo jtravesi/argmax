@@ -9,7 +9,7 @@ Work through the milestones in order and tick each box when done. A milestone is
 - [x] ESLint, Prettier, `svelte-check`, Vitest and Playwright configured; scripts `dev`, `build`, `preview`, `check`, `lint`, `test`, `test:e2e`.
 - [x] `python/test_oracle.py` passes against `fixtures/career-decision.expected.json`.
 - [x] Docker: `docker compose up --build` serves the site on `http://localhost:8080`; `nginx -t` passes; headers verified with `curl -I` on `/`, `/app` and a file under `/_app/immutable/`; container runs as non-root with a read-only filesystem.
-- [ ] `ci.yml` green with a trivial test, the Python tests and the Docker build.
+- [x] `ci.yml` green with a trivial test, the Python tests and the Docker build.
 - [x] Base layout with navigation to the four routes (empty pages).
 
 ## M1 · Mathematical core
