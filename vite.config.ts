@@ -35,7 +35,7 @@ export default defineConfig({
 				test: {
 					name: 'core',
 					environment: 'node',
-					include: ['tests/core/**/*.test.ts']
+					include: ['tests/core/**/*.test.ts', 'tests/unit/**/*.test.ts']
 				}
 			}
 		]

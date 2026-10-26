@@ -1,5 +1,17 @@
 // Every UI string lives here (CLAUDE.md, Conventions) so other languages can be added later.
+
+/** Names used inside issue messages, already resolved from the model. */
+export interface IssueContext {
+	/** Human label of the field the issue points to, e.g. "Weight of “Money”". */
+	field: string;
+	alternative: string;
+	params: Record<string, string | number>;
+}
+
+const percent = (x: string | number) => `${Math.round(Number(x) * 100)}%`;
+
 export const en = {
+	locale: 'en-US',
 	site: {
 		name: 'Argmax',
 		tagline: 'Decision making under uncertainty, with the math in plain sight.'
@@ -20,6 +32,211 @@ export const en = {
 		app: { title: 'Tool · Argmax', heading: 'Tool' },
 		model: { title: 'The model · Argmax', heading: 'The model' },
 		about: { title: 'About · Argmax', heading: 'About' }
+	},
+
+	app: {
+		toolbar: 'Model',
+		newModel: 'New model',
+		confirmNew: 'Start a new model? The current one will be discarded.',
+		loadExample: 'Load example',
+		confirmExample: 'Load the example? The current model will be discarded.',
+		saved: 'Saved in this browser.',
+		notSaved: (n: number) =>
+			`Not saved yet: ${n === 1 ? '1 problem needs' : `${n} problems need`} fixing.`,
+		storageUnavailable:
+			'This browser does not allow saving. The tool still works, but your model will be lost when you close the page.',
+		savedInvalid: 'A saved model could not be read and was ignored.'
+	},
+
+	wizard: {
+		stepsLabel: 'Steps',
+		stepOf: (n: number, total: number) => `Step ${n} of ${total}`,
+		hasErrors: 'has errors',
+		back: 'Back',
+		next: 'Next',
+		seeResults: 'See results',
+		issuesHeading: 'Check this step',
+		errorsHere: 'Errors',
+		warningsHere: 'Warnings',
+		steps: {
+			decision: 'The decision',
+			dimensions: 'Dimensions',
+			alternatives: 'Alternatives',
+			states: 'States and probabilities',
+			scores: 'Scores',
+			results: 'Results'
+		},
+		remove: 'Remove',
+		sum: (pct: number) => `Sum: ${pct}%`,
+		sumUnknown: 'Sum: —',
+		sumOk: 'adds up to 100%',
+		sumOff: 'does not add up to 100%',
+		normalize: 'Normalize',
+		decision: {
+			help: 'Phrase the decision as a question.',
+			title: 'Title',
+			titlePlaceholder: 'Should I…?',
+			description: 'Description (optional)',
+			horizon: 'Time horizon (optional)',
+			horizonPlaceholder: 'e.g. 1 year'
+		},
+		dimensions: {
+			help: [
+				'A weight says how much going from the worst (0) to the best (10) on that dimension is worth compared with the others. It is not how important the dimension is in the abstract.',
+				'Trick: imagine two scenarios that differ only on two dimensions, one at its best and the other at its worst. Which swing would you rather have, and by how much?'
+			],
+			name: 'Name',
+			weight: 'Weight (%)',
+			weightOf: (name: string) => `Weight of ${name} (%)`,
+			nameOf: (n: number) => `Name of dimension ${n}`,
+			add: 'Add dimension',
+			common: 'Common dimensions',
+			chips: [
+				'Money',
+				'Wellbeing',
+				'Learning',
+				'Freedom',
+				'Health',
+				'Relationships',
+				'Career progression'
+			],
+			removeOf: (name: string) => `Remove dimension ${name}`,
+			empty: 'No dimensions yet.',
+			limit: 'Up to 10 dimensions.'
+		},
+		alternatives: {
+			help: 'Is there an option you are not considering?',
+			nameOf: (n: number) => `Name of alternative ${n}`,
+			add: 'Add alternative',
+			removeOf: (name: string) => `Remove alternative ${name}`,
+			limit: 'Between 2 and 8 alternatives.'
+		},
+		states: {
+			help: [
+				'States are the possible outcomes if you choose this alternative. They must be mutually exclusive; 3 or 4 per alternative are usually enough.',
+				'Unsure about a probability? Ask yourself which outcome you would bet money on.',
+				'Read percentages as frequencies: 30% means 3 times out of 10.'
+			],
+			alternativesLabel: 'Alternative',
+			name: 'Outcome',
+			probability: 'Probability (%)',
+			nameOf: (n: number, alt: string) => `Outcome ${n} of ${alt}`,
+			probabilityOf: (name: string) => `Probability of ${name} (%)`,
+			add: 'Add state',
+			removeOf: (name: string) => `Remove state ${name}`,
+			empty: 'No states yet.',
+			limit: 'Up to 8 states per alternative.'
+		},
+		scores: {
+			help: 'Score each outcome on each dimension.',
+			scale: 'Scale: 0 terrible · 5 neutral · 10 excellent',
+			state: 'Outcome',
+			utility: 'u(a, s)',
+			utilityLong: 'Utility of the outcome',
+			scoreOf: (state: string, dimension: string) => `Score of ${state} on ${dimension}`,
+			noStates: 'Add states to this alternative first.',
+			noDimensions: 'Add dimensions first.'
+		},
+		blocked: 'Fix the errors in the steps marked above to see the results.'
+	},
+
+	results: {
+		verdict: 'Verdict',
+		winner: (name: string) => `${name} has the highest expected utility.`,
+		eu: 'Expected utility',
+		gap: (gap: string, name: string) => `${gap} ahead of ${name}`,
+		robustness: {
+			clear: 'Clear decision',
+			moderate: 'Moderate decision',
+			close: 'Close call: the inputs decide'
+		},
+		warnings: 'Warnings',
+		ranking: 'Ranking',
+		rankingChart: 'Expected utility per alternative, on a scale from 0 to 10',
+		breakdown: 'Breakdown per alternative',
+		state: 'Outcome',
+		probability: 'Probability',
+		utility: 'u(a, s)',
+		contribution: 'Contribution',
+		total: 'Expected utility',
+		contributionsChart: (alt: string) =>
+			`Contributions of each outcome to the expected utility of ${alt}`,
+		risk: 'Risk profile',
+		riskHelp:
+			'These indicators do not change the recommendation. They show whether an alternative wins by consistency or by its tail.',
+		tau: 'Threshold τ for a bad outcome',
+		alternative: 'Alternative',
+		worst: 'Worst case',
+		best: 'Best case',
+		stdDev: 'σ',
+		stdDevLong: 'Standard deviation',
+		pBelowTau: (tau: string) => `P(u < ${tau})`,
+		rangeChart: 'Range of utilities per alternative: worst case, expected utility and best case',
+		reminder:
+			'The model does not decide for you. If the result does not match your intuition, ask yourself what you are modeling wrong, or what is biasing your intuition.'
+	},
+
+	unnamed: {
+		dimension: (n: number) => `Dimension ${n}`,
+		alternative: (n: number) => `Alternative ${n}`,
+		state: (n: number) => `State ${n}`
+	},
+	quoted: (name: string) => `“${name}”`,
+
+	fields: {
+		title: 'Title',
+		description: 'Description',
+		horizon: 'Time horizon',
+		dimensions: 'Dimensions',
+		alternatives: 'Alternatives',
+		model: 'Model',
+		nameOf: (thing: string) => `Name of ${thing}`,
+		weightOf: (dim: string) => `Weight of ${dim}`,
+		statesOf: (alt: string) => `States of ${alt}`,
+		stateOf: (state: string, alt: string) => `${state} of ${alt}`,
+		probabilityOf: (state: string, alt: string) => `Probability of ${state} (${alt})`,
+		scoresOf: (state: string, alt: string) => `Scores of ${state} (${alt})`,
+		scoreOf: (state: string, alt: string, dim: string) => `Score of ${state} (${alt}) on ${dim}`
+	},
+
+	issues: {
+		'too-few-alternatives': () => 'Add at least 2 alternatives.',
+		'no-dimensions': () => 'Add at least 1 dimension.',
+		'no-states': (c: IssueContext) => `${c.alternative} needs at least 1 state.`,
+		'weight-invalid': (c: IssueContext) => `${c.field} must be a number of at least 0.`,
+		'weights-sum-zero': () => 'At least one weight must be above 0.',
+		'probability-invalid': (c: IssueContext) => `${c.field} must be a number of at least 0.`,
+		'probabilities-sum-zero': (c: IssueContext) =>
+			`${c.alternative}: at least one probability must be above 0.`,
+		'score-out-of-range': (c: IssueContext) => `${c.field} must be between 0 and 10.`,
+		'scores-mismatch': (c: IssueContext) => `${c.field} must have exactly one score per dimension.`,
+		'weights-not-normalized': (c: IssueContext) =>
+			`Weights add up to ${percent(c.params.sum)}; they are normalized to 100%.`,
+		'probabilities-not-normalized': (c: IssueContext) =>
+			`${c.alternative}: probabilities add up to ${percent(c.params.sum)}; they are normalized to 100%.`,
+		'single-state': (c: IssueContext) =>
+			`${c.alternative} has a single state, so it carries no uncertainty.`,
+		'zero-weight': (c: IssueContext) => `${c.field} has weight 0, so it has no effect.`,
+		'invalid-json': () => 'The file is not valid JSON.',
+		'unsupported-version': () => 'This model was made with an unsupported version of Argmax.',
+		'forbidden-key': (c: IssueContext) => `${c.field}: this name is not allowed.`,
+		'duplicate-id': (c: IssueContext) => `${c.field} is duplicated.`,
+		'invalid-type': (c: IssueContext) => `${c.field} has the wrong type.`,
+		'too-small': (c: IssueContext) => {
+			const min = Number(c.params.minimum);
+			if (c.params.kind === 'text')
+				return min <= 1 ? `${c.field} is required.` : `${c.field} is too short.`;
+			if (c.params.kind === 'list') return `${c.field}: at least ${min}.`;
+			return `${c.field} must be at least ${min}.`;
+		},
+		'too-big': (c: IssueContext) => {
+			const max = Number(c.params.maximum);
+			if (c.params.kind === 'text') return `${c.field} is too long (up to ${max} characters).`;
+			if (c.params.kind === 'list') return `${c.field}: at most ${max}.`;
+			return `${c.field} must be at most ${max}.`;
+		},
+		'unrecognized-key': (c: IssueContext) => `${c.field} is not part of a model.`,
+		invalid: (c: IssueContext) => `${c.field} is not valid.`
 	}
 } as const;
 
