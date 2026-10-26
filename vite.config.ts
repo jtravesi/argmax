@@ -23,6 +23,8 @@ const katexWoff2Only: Plugin = {
 };
 
 export default defineConfig({
+	// Never inline assets as data: URIs; the CSP only allows fonts from 'self'.
+	build: { assetsInlineLimit: 0 },
 	plugins: [
 		katexWoff2Only,
 		sveltekit({
@@ -33,7 +35,24 @@ export default defineConfig({
 			},
 			// Every page is prerendered; 404.html is the fallback for nginx and GitHub Pages.
 			adapter: adapter({ fallback: '404.html' }),
-			paths: { base: basePath as '' | `/${string}` }
+			paths: { base: basePath as '' | `/${string}` },
+			// ARCHITECTURE.md §7: a meta tag with hashes on every prerendered page. It is what
+			// protects static hosting without custom headers; nginx and _headers add the rest.
+			csp: {
+				mode: 'hash',
+				directives: {
+					'default-src': ['self'],
+					'script-src': ['self'],
+					// KaTeX and the charts use style attributes.
+					'style-src': ['self', 'unsafe-inline'],
+					'img-src': ['self', 'data:'],
+					'font-src': ['self'],
+					'connect-src': ['none'],
+					'object-src': ['none'],
+					'base-uri': ['self'],
+					'form-action': ['none']
+				}
+			}
 		})
 	],
 	test: {

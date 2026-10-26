@@ -3,6 +3,10 @@
 import { z } from 'zod';
 import type { DecisionModel, Issue, IssueCode, Result } from './types';
 
+// zod probes `new Function` to speed up validation; the page's CSP forbids eval
+// (ARCHITECTURE.md §7), and even the probe is reported as a violation.
+z.config({ jitless: true });
+
 export const CURRENT_SCHEMA_VERSION = 1;
 
 /** Size limits of a model (SPEC.md §3.3, ARCHITECTURE.md §4). */
