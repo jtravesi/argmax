@@ -17,39 +17,41 @@
 				label={t.results.contributionsChart(alt.name)}
 				segments={alt.states.map((s) => ({ key: s.id, value: s.contribution }))}
 			/>
-			<table>
-				<thead>
-					<tr>
-						<th scope="col">{t.results.state}</th>
-						<th scope="col" class="num">{t.results.probability}</th>
-						<th scope="col" class="num">{t.results.utility}</th>
-						<th scope="col" class="num">{t.results.contribution}</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each alt.states as s, j (s.id)}
+			<div class="table-wrap">
+				<table>
+					<thead>
 						<tr>
-							<th scope="row">
-								<span
-									class="swatch"
-									style="background: var(--series-{(j % 8) + 1})"
-									aria-hidden="true"
-								></span>
-								{s.name}
-							</th>
-							<td class="num">{formatPercent(s.probability)}</td>
-							<td class="num">{formatUtility(s.utility)}</td>
-							<td class="num">{formatUtility(s.contribution)}</td>
+							<th scope="col">{t.results.state}</th>
+							<th scope="col" class="num">{t.results.probability}</th>
+							<th scope="col" class="num">{t.results.utility}</th>
+							<th scope="col" class="num">{t.results.contribution}</th>
 						</tr>
-					{/each}
-				</tbody>
-				<tfoot>
-					<tr>
-						<th scope="row" colspan="3">{t.results.total}</th>
-						<td class="num total">{formatUtility(alt.eu)}</td>
-					</tr>
-				</tfoot>
-			</table>
+					</thead>
+					<tbody>
+						{#each alt.states as s, j (s.id)}
+							<tr>
+								<th scope="row">
+									<span
+										class="swatch"
+										style="background: var(--series-{(j % 8) + 1})"
+										aria-hidden="true"
+									></span>
+									{s.name}
+								</th>
+								<td class="num">{formatPercent(s.probability)}</td>
+								<td class="num">{formatUtility(s.utility)}</td>
+								<td class="num">{formatUtility(s.contribution)}</td>
+							</tr>
+						{/each}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row" colspan="3">{t.results.total}</th>
+							<td class="num total">{formatUtility(alt.eu)}</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 	{/each}
 </section>

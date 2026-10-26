@@ -161,6 +161,11 @@ th.num {
 	font-variant-numeric: tabular-nums;
 }
 
+/* Tables scroll on their own if they cannot fit, never the page. */
+.table-wrap {
+	overflow-x: auto;
+}
+
 .help {
 	color: var(--color-muted);
 }

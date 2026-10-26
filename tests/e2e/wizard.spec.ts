@@ -111,8 +111,9 @@ test('errors flag their step and block the results, but not navigation', async (
 	await expect(page.getByRole('heading', { level: 2 })).toBeFocused();
 });
 
-test.describe('at 360 px', () => {
-	test.use({ viewport: { width: 360, height: 740 } });
+// SPEC.md §7 asks for 360 px; 320 px leaves room for wider system fonts.
+test.describe('at 320 px', () => {
+	test.use({ viewport: { width: 320, height: 740 } });
 
 	test('no step scrolls horizontally', async ({ page }) => {
 		await loadExample(page);

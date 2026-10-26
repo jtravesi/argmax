@@ -22,6 +22,8 @@
 <style>
 	.results {
 		display: grid;
+		/* minmax(0, …) lets wide content shrink instead of widening the page. */
+		grid-template-columns: minmax(0, 1fr);
 		gap: 2rem;
 	}
 
