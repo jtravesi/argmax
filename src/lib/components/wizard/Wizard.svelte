@@ -58,32 +58,35 @@
 	<p class="count">{t.wizard.stepOf(index + 1, STEPS.length)}</p>
 	<h2 id="step-heading" tabindex="-1" bind:this={heading}>{t.wizard.steps[editor.step]}</h2>
 
-	{#if editor.step === 'decision'}
-		<StepDecision {editor} />
-	{:else if editor.step === 'dimensions'}
-		<StepDimensions {editor} />
-	{:else if editor.step === 'alternatives'}
-		<StepAlternatives {editor} />
-	{:else if editor.step === 'states'}
-		<StepStates {editor} />
-	{:else if editor.step === 'scores'}
-		<StepScores {editor} />
-	{:else if editor.analysis?.ok}
-		<Results analysis={editor.analysis} {editor} />
-	{:else}
-		<div class="blocked">
-			<p>{t.wizard.blocked}</p>
-			<ul>
-				{#each stepsWithErrors as step (step)}
-					<li>
-						<button type="button" class="link" onclick={() => go(step)}
-							>{t.wizard.steps[step]}</button
-						>
-					</li>
-				{/each}
-			</ul>
-		</div>
-	{/if}
+	<!-- A shared model opened read-only cannot be edited (SPEC.md §4); results stay interactive. -->
+	<fieldset class="plain" disabled={editor.readOnly && editor.step !== 'results'}>
+		{#if editor.step === 'decision'}
+			<StepDecision {editor} />
+		{:else if editor.step === 'dimensions'}
+			<StepDimensions {editor} />
+		{:else if editor.step === 'alternatives'}
+			<StepAlternatives {editor} />
+		{:else if editor.step === 'states'}
+			<StepStates {editor} />
+		{:else if editor.step === 'scores'}
+			<StepScores {editor} />
+		{:else if editor.analysis?.ok}
+			<Results analysis={editor.analysis} {editor} />
+		{:else}
+			<div class="blocked">
+				<p>{t.wizard.blocked}</p>
+				<ul>
+					{#each stepsWithErrors as step (step)}
+						<li>
+							<button type="button" class="link" onclick={() => go(step)}
+								>{t.wizard.steps[step]}</button
+							>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		{/if}
+	</fieldset>
 
 	{#if editor.step !== 'results'}
 		<IssueList issues={editor.issuesFor(editor.step)} />
@@ -163,6 +166,13 @@
 
 	.step {
 		margin-top: 1.5rem;
+	}
+
+	.plain {
+		min-width: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
 	}
 
 	.count {

@@ -18,6 +18,8 @@ export class Editor {
 	tau = $state(5);
 	/** Half-width h of the tornado intervals (MODEL.md §5.4). */
 	h = $state(0.1);
+	/** Viewing a shared model without replacing the saved one (SPEC.md §4). Never saved. */
+	readOnly = $state(false);
 
 	readonly validation = $derived(validate(this.model));
 	readonly parsed = $derived(parseModel($state.snapshot(this.model)));
@@ -72,8 +74,12 @@ export class Editor {
 		this.step = step;
 	}
 
-	replace(model: DecisionModel): void {
+	replace(
+		model: DecisionModel,
+		{ step = 'decision', readOnly = false }: { step?: StepName; readOnly?: boolean } = {}
+	): void {
 		this.model = model;
-		this.step = 'decision';
+		this.step = step;
+		this.readOnly = readOnly;
 	}
 }
