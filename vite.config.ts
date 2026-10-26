@@ -1,3 +1,4 @@
+import type { Plugin } from 'vite';
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
@@ -8,8 +9,22 @@ if (basePath !== '' && (!basePath.startsWith('/') || basePath.endsWith('/'))) {
 	throw new Error(`BASE_PATH must be empty or start (but not end) with "/", got "${basePath}"`);
 }
 
+/**
+ * KaTeX's CSS lists every font as woff2, woff and ttf. The supported browsers
+ * (SPEC.md §7) only need woff2, so the other formats are not emitted.
+ */
+const katexWoff2Only: Plugin = {
+	name: 'katex-woff2-only',
+	enforce: 'pre',
+	transform(code, id) {
+		if (!id.split('?')[0].endsWith('katex/dist/katex.min.css')) return;
+		return code.replace(/,url\([^)]+\.(?:woff|ttf)\) format\("(?:woff|truetype)"\)/g, '');
+	}
+};
+
 export default defineConfig({
 	plugins: [
+		katexWoff2Only,
 		sveltekit({
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
