@@ -24,7 +24,7 @@ FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
 LABEL org.opencontainers.image.title="Argmax" \
       org.opencontainers.image.description="Decision making under uncertainty with expected utility. Runs entirely in the browser." \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.source="https://github.com/<GITHUB_USER>/argmax"
+      org.opencontainers.image.source="https://github.com/jtravesi/argmax"
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker/security-headers.conf /etc/nginx/snippets/security-headers.conf

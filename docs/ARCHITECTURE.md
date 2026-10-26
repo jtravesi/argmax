@@ -217,7 +217,7 @@ Usage:
 ```bash
 docker compose up --build          # http://localhost:8080
 # or, with the published image:
-docker run --rm -p 8080:8080 ghcr.io/<GITHUB_USER>/argmax:latest
+docker run --rm -p 8080:8080 ghcr.io/jtravesi/argmax:latest
 ```
 
 TLS (and HSTS) belong to the reverse proxy in front of the container (Caddy, Traefik, nginx…), not to this image.
@@ -226,7 +226,7 @@ TLS (and HSTS) belong to the reverse proxy in front of the container (Caddy, Tra
 
 - `ci.yml` (push and PR): lint, `svelte-check`, Vitest with coverage, pytest, build, Playwright against the build, `docker build`, and a Trivy scan of the image (fail on HIGH/CRITICAL with an available fix).
 - `pages.yml` (push to `main`): build with `BASE_PATH=/argmax` and deploy to GitHub Pages with `actions/upload-pages-artifact` and `actions/deploy-pages`.
-- `docker.yml` (tag `v*`): multi-arch build (`linux/amd64`, `linux/arm64`) and push to `ghcr.io/<GITHUB_USER>/argmax` with tags `vX.Y.Z` and `latest`, SBOM and provenance attestations enabled.
+- `docker.yml` (tag `v*`): multi-arch build (`linux/amd64`, `linux/arm64`) and push to `ghcr.io/jtravesi/argmax` with tags `vX.Y.Z` and `latest`, SBOM and provenance attestations enabled.
 
 ## 9. Accessibility and interface
 

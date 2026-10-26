@@ -61,5 +61,6 @@ Before considering a task done: `npm run check && npm run lint && npm test && py
 ## Author
 
 - Author: Jose
-- GitHub: `<GITHUB_USER>`  ← **pending**: replace before M3 (also in `LICENSE`, `compose.yaml` and the docs)
-- Repository: `<GITHUB_USER>/argmax`
+- GitHub: `jtravesi`
+- Copyright holder in `LICENSE`: **pending** (replace `<YOUR NAME>` before M3)
+- Repository: `jtravesi/argmax`

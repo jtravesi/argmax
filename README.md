@@ -18,7 +18,7 @@ Argmax walks you through a structured decision: list your alternatives, the outc
 - **With Docker:**
 
   ```bash
-  docker run --rm -p 8080:8080 ghcr.io/<GITHUB_USER>/argmax:latest
+  docker run --rm -p 8080:8080 ghcr.io/jtravesi/argmax:latest
   ```
 
   or, from a clone of this repository:

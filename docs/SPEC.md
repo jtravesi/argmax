@@ -95,7 +95,7 @@ Claude Code writes templates 2 and 3 with plausible values, and they must be con
 
 ## 6. About
 
-- Author name and link to their GitHub profile (`<GITHUB_USER>`, see `CLAUDE.md`).
+- Author name and link to their GitHub profile (`jtravesi`, see `CLAUDE.md`).
 - Link to the repository and the MIT license.
 - **Privacy:** no server, no cookies, no analytics, no requests to third parties; anything saved lives in the browser and is removed with its site data.
 - **Disclaimer:** an educational tool to support reflection; not professional advice (financial, medical, legal or psychological).

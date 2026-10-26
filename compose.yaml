@@ -3,11 +3,11 @@ services:
     build:
       context: .
       args:
-        BASE_PATH: ""
-    image: ghcr.io/<GITHUB_USER>/argmax:latest
+        BASE_PATH: ''
+    image: ghcr.io/jtravesi/argmax:latest
     container_name: argmax
     ports:
-      - "8080:8080"
+      - '8080:8080'
     read_only: true
     tmpfs:
       - /tmp
