@@ -1,0 +1,161 @@
+{
+	"schemaVersion": 1,
+	"title": "Choosing a flat",
+	"description": "Example: renting in the centre, renting in the suburbs, or buying. Horizon: 3 years.",
+	"horizon": "3 years",
+	"dimensions": [
+		{
+			"id": "d1",
+			"name": "Monthly cost",
+			"weight": 0.3
+		},
+		{
+			"id": "d2",
+			"name": "Commute",
+			"weight": 0.2
+		},
+		{
+			"id": "d3",
+			"name": "Space and light",
+			"weight": 0.2
+		},
+		{
+			"id": "d4",
+			"name": "Neighbourhood",
+			"weight": 0.15
+		},
+		{
+			"id": "d5",
+			"name": "Flexibility",
+			"weight": 0.15
+		}
+	],
+	"alternatives": [
+		{
+			"id": "a1",
+			"name": "Rent a small flat in the city centre",
+			"states": [
+				{
+					"id": "s1",
+					"name": "Rent stays as agreed",
+					"probability": 0.6,
+					"scores": {
+						"d1": 4,
+						"d2": 9,
+						"d3": 4,
+						"d4": 8,
+						"d5": 8
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Rent goes up sharply at renewal",
+					"probability": 0.3,
+					"scores": {
+						"d1": 2,
+						"d2": 9,
+						"d3": 4,
+						"d4": 8,
+						"d5": 6
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Noisy neighbours",
+					"probability": 0.1,
+					"scores": {
+						"d1": 4,
+						"d2": 9,
+						"d3": 3,
+						"d4": 4,
+						"d5": 7
+					}
+				}
+			]
+		},
+		{
+			"id": "a2",
+			"name": "Rent a larger flat in the suburbs",
+			"states": [
+				{
+					"id": "s1",
+					"name": "Commute as expected",
+					"probability": 0.55,
+					"scores": {
+						"d1": 7,
+						"d2": 4,
+						"d3": 8,
+						"d4": 6,
+						"d5": 8
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Commute much worse than expected",
+					"probability": 0.3,
+					"scores": {
+						"d1": 7,
+						"d2": 2,
+						"d3": 8,
+						"d4": 6,
+						"d5": 7
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Remote work becomes the norm",
+					"probability": 0.15,
+					"scores": {
+						"d1": 7,
+						"d2": 9,
+						"d3": 8,
+						"d4": 6,
+						"d5": 8
+					}
+				}
+			]
+		},
+		{
+			"id": "a3",
+			"name": "Buy a flat with a mortgage",
+			"states": [
+				{
+					"id": "s1",
+					"name": "Interest rates stay low",
+					"probability": 0.5,
+					"scores": {
+						"d1": 6,
+						"d2": 6,
+						"d3": 7,
+						"d4": 7,
+						"d5": 3
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Interest rates rise",
+					"probability": 0.35,
+					"scores": {
+						"d1": 3,
+						"d2": 6,
+						"d3": 7,
+						"d4": 7,
+						"d5": 2
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Unexpected repairs",
+					"probability": 0.15,
+					"scores": {
+						"d1": 2,
+						"d2": 6,
+						"d3": 6,
+						"d4": 7,
+						"d5": 2
+					}
+				}
+			]
+		}
+	]
+}

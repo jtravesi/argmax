@@ -1,0 +1,161 @@
+{
+	"schemaVersion": 1,
+	"title": "Choosing between job offers",
+	"description": "Example: two job offers and the option of staying. Horizon: 2 years.",
+	"horizon": "2 years",
+	"dimensions": [
+		{
+			"id": "d1",
+			"name": "Salary and benefits",
+			"weight": 0.3
+		},
+		{
+			"id": "d2",
+			"name": "Growth and learning",
+			"weight": 0.25
+		},
+		{
+			"id": "d3",
+			"name": "Work-life balance",
+			"weight": 0.2
+		},
+		{
+			"id": "d4",
+			"name": "Team and culture",
+			"weight": 0.15
+		},
+		{
+			"id": "d5",
+			"name": "Job security",
+			"weight": 0.1
+		}
+	],
+	"alternatives": [
+		{
+			"id": "a1",
+			"name": "Offer from a large tech company",
+			"states": [
+				{
+					"id": "s1",
+					"name": "Good team, steady promotions",
+					"probability": 0.45,
+					"scores": {
+						"d1": 8,
+						"d2": 7,
+						"d3": 6,
+						"d4": 7,
+						"d5": 8
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Bureaucratic, slow progress",
+					"probability": 0.4,
+					"scores": {
+						"d1": 8,
+						"d2": 4,
+						"d3": 6,
+						"d4": 5,
+						"d5": 8
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Reorganization and layoffs",
+					"probability": 0.15,
+					"scores": {
+						"d1": 6,
+						"d2": 3,
+						"d3": 4,
+						"d4": 3,
+						"d5": 2
+					}
+				}
+			]
+		},
+		{
+			"id": "a2",
+			"name": "Offer from a startup",
+			"states": [
+				{
+					"id": "s1",
+					"name": "The startup takes off",
+					"probability": 0.25,
+					"scores": {
+						"d1": 7,
+						"d2": 10,
+						"d3": 4,
+						"d4": 9,
+						"d5": 6
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Grows slowly and survives",
+					"probability": 0.45,
+					"scores": {
+						"d1": 5,
+						"d2": 8,
+						"d3": 4,
+						"d4": 7,
+						"d5": 4
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Shuts down within a year",
+					"probability": 0.3,
+					"scores": {
+						"d1": 3,
+						"d2": 6,
+						"d3": 5,
+						"d4": 5,
+						"d5": 0
+					}
+				}
+			]
+		},
+		{
+			"id": "a3",
+			"name": "Stay in the current job",
+			"states": [
+				{
+					"id": "s1",
+					"name": "A raise and a new project",
+					"probability": 0.3,
+					"scores": {
+						"d1": 6,
+						"d2": 6,
+						"d3": 8,
+						"d4": 7,
+						"d5": 8
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Same as now",
+					"probability": 0.55,
+					"scores": {
+						"d1": 5,
+						"d2": 3,
+						"d3": 8,
+						"d4": 6,
+						"d5": 7
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Things get worse",
+					"probability": 0.15,
+					"scores": {
+						"d1": 4,
+						"d2": 2,
+						"d3": 6,
+						"d4": 3,
+						"d5": 6
+					}
+				}
+			]
+		}
+	]
+}

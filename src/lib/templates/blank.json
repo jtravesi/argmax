@@ -1,0 +1,96 @@
+{
+	"schemaVersion": 1,
+	"title": "My decision",
+	"description": "A starting point: rename the alternatives, outcomes and dimensions, then set the weights, probabilities and scores.",
+	"dimensions": [
+		{
+			"id": "d1",
+			"name": "Money",
+			"weight": 0.34
+		},
+		{
+			"id": "d2",
+			"name": "Wellbeing",
+			"weight": 0.33
+		},
+		{
+			"id": "d3",
+			"name": "Learning",
+			"weight": 0.33
+		}
+	],
+	"alternatives": [
+		{
+			"id": "a1",
+			"name": "Option A",
+			"states": [
+				{
+					"id": "s1",
+					"name": "Best case",
+					"probability": 0.25,
+					"scores": {
+						"d1": 5,
+						"d2": 5,
+						"d3": 5
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Most likely",
+					"probability": 0.5,
+					"scores": {
+						"d1": 5,
+						"d2": 5,
+						"d3": 5
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Worst case",
+					"probability": 0.25,
+					"scores": {
+						"d1": 5,
+						"d2": 5,
+						"d3": 5
+					}
+				}
+			]
+		},
+		{
+			"id": "a2",
+			"name": "Option B",
+			"states": [
+				{
+					"id": "s1",
+					"name": "Best case",
+					"probability": 0.25,
+					"scores": {
+						"d1": 5,
+						"d2": 5,
+						"d3": 5
+					}
+				},
+				{
+					"id": "s2",
+					"name": "Most likely",
+					"probability": 0.5,
+					"scores": {
+						"d1": 5,
+						"d2": 5,
+						"d3": 5
+					}
+				},
+				{
+					"id": "s3",
+					"name": "Worst case",
+					"probability": 0.25,
+					"scores": {
+						"d1": 5,
+						"d2": 5,
+						"d3": 5
+					}
+				}
+			]
+		}
+	]
+}
