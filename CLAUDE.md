@@ -60,7 +60,7 @@ Before considering a task done: `npm run check && npm run lint && npm test && py
 
 ## Author
 
-- Author: Jose
+- Author: José Carlos Travesí
 - GitHub: `jtravesi`
-- Copyright holder in `LICENSE`: **pending** (replace `<YOUR NAME>` before M3)
+- Copyright holder: José Carlos Travesí
 - Repository: `jtravesi/argmax`
