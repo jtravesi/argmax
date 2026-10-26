@@ -34,8 +34,24 @@ export default defineConfig(
 		}
 	},
 	{
-		// Override or add rule settings here, such as:
-		// 'svelte/button-has-type': 'error'
-		rules: {}
+		// CLAUDE.md rule 2: the core is pure. No Svelte, SvelteKit, DOM or storage.
+		files: ['src/lib/core/**'],
+		languageOptions: { globals: { ...globals.es2024 } },
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{ patterns: ['svelte', 'svelte/*', '$app/*', '#lib/components/*', '#lib/stores/*'] }
+			],
+			'no-restricted-globals': [
+				'error',
+				'window',
+				'document',
+				'localStorage',
+				'sessionStorage',
+				'navigator',
+				'location',
+				'fetch'
+			]
+		}
 	}
 );

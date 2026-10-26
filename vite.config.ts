@@ -23,6 +23,12 @@ export default defineConfig({
 	],
 	test: {
 		expect: { requireAssertions: true },
+		coverage: {
+			provider: 'v8',
+			include: ['src/lib/core/**'],
+			// ROADMAP.md M1: core branch coverage ≥ 95%.
+			thresholds: { branches: 95, functions: 95, lines: 95, statements: 95 }
+		},
 		projects: [
 			{
 				extends: './vite.config.ts',
