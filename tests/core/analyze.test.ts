@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
 	analyze,
 	dominance,
+	liveStateUtility,
 	normalize,
 	rank,
 	riskProfile,
@@ -180,5 +181,40 @@ describe('analyze', () => {
 		expect(result.ok).toBe(true);
 		expect(result.warnings.map((w) => w.code)).toEqual(['weights-not-normalized']);
 		expect(result.verdict.robustness).toBe('moderate');
+	});
+});
+
+describe('liveStateUtility', () => {
+	it('matches stateUtility on a valid model', () => {
+		const m = career();
+		const nm = norm(m);
+		for (const alt of m.alternatives) {
+			for (const s of alt.states) {
+				expect(liveStateUtility(m, s)).toBeCloseTo(stateUtility(nm, alt.id, s.id), 12);
+			}
+		}
+	});
+
+	it('works while other parts of the model are still invalid', () => {
+		const m = tiny();
+		m.title = '';
+		m.alternatives[1].states[0].probability = Number.NaN;
+		m.dimensions.forEach((d) => (d.weight = 3));
+		expect(liveStateUtility(m, m.alternatives[0].states[0])).toBe(7);
+	});
+
+	it('returns null with invalid weights or scores', () => {
+		const zero = tiny();
+		zero.dimensions.forEach((d) => (d.weight = 0));
+		expect(liveStateUtility(zero, zero.alternatives[0].states[0])).toBeNull();
+		const negative = tiny();
+		negative.dimensions[0].weight = -1;
+		expect(liveStateUtility(negative, negative.alternatives[0].states[0])).toBeNull();
+		const score = tiny();
+		score.alternatives[0].states[0].scores.d1 = Number.NaN;
+		expect(liveStateUtility(score, score.alternatives[0].states[0])).toBeNull();
+		const missing = tiny();
+		missing.alternatives[0].states[0].scores = { d1: 5 };
+		expect(liveStateUtility(missing, missing.alternatives[0].states[0])).toBeNull();
 	});
 });

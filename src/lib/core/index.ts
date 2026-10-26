@@ -1,6 +1,6 @@
 // Pure core: no Svelte, DOM, window or localStorage (CLAUDE.md, rule 2).
 export * from './types';
-export { parseModel, serialize, deserialize, CURRENT_SCHEMA_VERSION } from './schema';
+export { parseModel, serialize, deserialize, CURRENT_SCHEMA_VERSION, LIMITS } from './schema';
 export { validate } from './validate';
 export { normalize } from './normalize';
 export {
@@ -9,6 +9,7 @@ export {
 	expectedProfile,
 	expectedUtility,
 	contributions,
+	liveStateUtility,
 	rank,
 	type RankEntry
 } from './utility';

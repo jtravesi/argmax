@@ -1,5 +1,12 @@
 import { alternativeOf, stateOf } from './normalize';
-import { EPS, type Id, type NormalizedModel, type NormalizedState } from './types';
+import {
+	EPS,
+	type DecisionModel,
+	type Id,
+	type NormalizedModel,
+	type NormalizedState,
+	type State
+} from './types';
 
 /** u(a, s) = Σ_d w_d x_{a,s,d} (MODEL.md §2). */
 function utilityOf(nm: NormalizedModel, state: NormalizedState): number {
@@ -56,4 +63,26 @@ export function rank(nm: NormalizedModel): RankEntry[] {
 	return nm.alternatives
 		.map((a) => ({ altId: a.id, eu: expectedUtility(nm, a.id) }))
 		.sort((x, y) => (Math.abs(x.eu - y.eu) < EPS ? 0 : y.eu - x.eu));
+}
+
+/**
+ * u(a, s) for one state of a model that may still be half-edited (MODEL.md §2),
+ * for live display while scoring. Null when the weights or this state's scores
+ * are not valid yet (MODEL.md §7), whatever the rest of the model looks like.
+ */
+export function liveStateUtility(model: DecisionModel, state: State): number | null {
+	let total = 0;
+	for (const d of model.dimensions) {
+		if (!(Number.isFinite(d.weight) && d.weight >= 0)) return null;
+		total += d.weight;
+	}
+	if (total < EPS) return null;
+	let u = 0;
+	for (const d of model.dimensions) {
+		if (!Object.hasOwn(state.scores, d.id)) return null;
+		const x = state.scores[d.id];
+		if (!(Number.isFinite(x) && x >= 0 && x <= 10)) return null;
+		u += (d.weight / total) * x;
+	}
+	return u;
 }

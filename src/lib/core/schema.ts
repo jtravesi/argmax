@@ -5,15 +5,27 @@ import type { DecisionModel, Issue, IssueCode, Result } from './types';
 
 export const CURRENT_SCHEMA_VERSION = 1;
 
+/** Size limits of a model (SPEC.md §3.3, ARCHITECTURE.md §4). */
+export const LIMITS = {
+	title: 120,
+	description: 1000,
+	horizon: 80,
+	name: 80,
+	id: 64,
+	dimensions: { min: 1, max: 10 },
+	alternatives: { min: 2, max: 8 },
+	states: { min: 1, max: 8 }
+} as const;
+
 const FORBIDDEN_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 const MAX_SCAN_DEPTH = 8;
 
 const id = z
 	.string()
 	.min(1)
-	.max(64)
+	.max(LIMITS.id)
 	.refine((v) => !FORBIDDEN_KEYS.has(v), { params: { code: 'forbidden-key' } });
-const name = z.string().min(1).max(80);
+const name = z.string().min(1).max(LIMITS.name);
 
 const stateSchema = z.strictObject({
 	id,
@@ -25,7 +37,7 @@ const stateSchema = z.strictObject({
 const alternativeSchema = z.strictObject({
 	id,
 	name,
-	states: z.array(stateSchema).min(1).max(8)
+	states: z.array(stateSchema).min(LIMITS.states.min).max(LIMITS.states.max)
 });
 
 const dimensionSchema = z.strictObject({
@@ -37,11 +49,14 @@ const dimensionSchema = z.strictObject({
 const modelSchema = z
 	.strictObject({
 		schemaVersion: z.literal(1),
-		title: z.string().min(1).max(120),
-		description: z.string().max(1000).optional(),
-		horizon: z.string().max(80).optional(),
-		dimensions: z.array(dimensionSchema).min(1).max(10),
-		alternatives: z.array(alternativeSchema).min(2).max(8)
+		title: z.string().min(1).max(LIMITS.title),
+		description: z.string().max(LIMITS.description).optional(),
+		horizon: z.string().max(LIMITS.horizon).optional(),
+		dimensions: z.array(dimensionSchema).min(LIMITS.dimensions.min).max(LIMITS.dimensions.max),
+		alternatives: z
+			.array(alternativeSchema)
+			.min(LIMITS.alternatives.min)
+			.max(LIMITS.alternatives.max)
 	})
 	.superRefine((m, ctx) => {
 		const duplicate = (ids: string[], path: (string | number)[]) => {
